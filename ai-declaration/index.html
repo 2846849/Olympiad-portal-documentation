@@ -9,10 +9,8 @@
       
       
       
-        <link rel="prev" href="../architecture/">
+        <link rel="prev" href="../methodology/">
       
-      
-        <link rel="next" href="../backend/">
       
       
         
@@ -23,7 +21,7 @@
     
     
       
-        <title>Frontend - Olympiad-portal</title>
+        <title>AI Declaration - Olympiad-portal</title>
       
     
     
@@ -74,7 +72,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#2-frontend" class="md-skip">
+        <a href="#ai-declaration" class="md-skip">
           Skip to content
         </a>
       
@@ -108,7 +106,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Frontend
+              AI Declaration
             
           </span>
         </div>
@@ -375,37 +373,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Frontend
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../frontend/" class="md-nav__link">
         
   
   
@@ -421,59 +392,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#21-framework-react" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        2.1 Framework — React
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#22-state-management-tanstack-query" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        2.2 State Management — TanStack Query
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#23-routing-react-router" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        2.3 Routing — React Router
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -707,10 +625,19 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../ai-declaration/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -726,6 +653,7 @@
   
 
       </a>
+      
     </li>
   
 
@@ -758,47 +686,6 @@
     
   
   
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#21-framework-react" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        2.1 Framework — React
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#22-state-management-tanstack-query" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        2.2 State Management — TanStack Query
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#23-routing-react-router" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        2.3 Routing — React Router
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
 </nav>
                   </div>
                 </div>
@@ -814,23 +701,9 @@
 
 
 
-<h1 id="2-frontend">2. Frontend</h1>
-<h2 id="21-framework-react">2.1 Framework — React</h2>
-<p>The frontend is a React single-page application, built with Vite. React was chosen
-because the project requires two functionally distinct interfaces — an organiser
-console and an educator/student portal — both of which are dynamic and stateful,
-involving round countdowns, live submission status, and marking queues. React's
-component model divides this work cleanly across a group of six, and its ecosystem
-provides supporting components (timers, data tables) that these interfaces require.</p>
-<h2 id="22-state-management-tanstack-query">2.2 State Management — TanStack Query</h2>
-<p>Most of the application's state is <strong>server state</strong> — round status, submissions,
-and marks — rather than local UI state. TanStack Query manages this, providing
-caching and refetching without the extra boilerplate of a general-purpose state
-management library.</p>
-<h2 id="23-routing-react-router">2.3 Routing — React Router</h2>
-<p>React Router provides client-side routing, with routes gated by role so that the
-organiser console and the educator/student portal can be served from a single
-application.</p>
+<h1 id="ai-declaration">AI Declaration</h1>
+<p>This documentation was adapted from the team's Technology Stack and Architecture
+    document, which was generated with Claude-Web (Claude Sonnet 5).</p>
 
 
 
@@ -866,7 +739,7 @@ application.</p>
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../architecture/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Architecture">
+          <a href="../methodology/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Project Methodology">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
@@ -876,27 +749,11 @@ application.</p>
                 Previous
               </span>
               <div class="md-ellipsis">
-                Architecture
+                Project Methodology
               </div>
             </div>
           </a>
         
-        
-          
-          <a href="../backend/" class="md-footer__link md-footer__link--next" aria-label="Next: Backend">
-            <div class="md-footer__title">
-              <span class="md-footer__direction">
-                Next
-              </span>
-              <div class="md-ellipsis">
-                Backend
-              </div>
-            </div>
-            <div class="md-footer__button md-icon">
-              
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
-            </div>
-          </a>
         
       </nav>
     
