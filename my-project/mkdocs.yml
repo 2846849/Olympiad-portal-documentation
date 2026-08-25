@@ -1,1 +1,40 @@
-site_name: My Docs
+site_name: Olympiad-portal
+theme:
+  name: material
+  features:
+    - navigation.instant
+    - navigation.instant.progress
+    - navigation.tracking
+    - navigation.tabs
+    - navigation.sections
+    - navigation.top
+    - navigation.footer
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+  palette:
+    - scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+nav:
+  - Technology Stack and Architecture:
+      - Overview: index.md
+      - Architecture: architecture.md
+      - Frontend: frontend.md
+      - Backend: backend.md
+      - Data and Storage: data-storage.md
+      - Scheduling: scheduling.md
+      - External Integration (EmailJS): external-integration.md
+      - Testing: testing.md
+      - CI/CD and Hosting: cicd-hosting.md
+      - Version Control: version-control.md
+      - Project Methodology: methodology.md

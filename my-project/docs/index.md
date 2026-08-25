@@ -1,17 +1,23 @@
-# Welcome to MkDocs
+# Technology Stack and Architecture
 
-For full documentation visit [mkdocs.org](https://www.mkdocs.org).
+**COMS3011A Project 5 — Olympiad Portal**
+**Team:** Prompt Engineers
 
-## Commands
+This section of the documentation site describes the system's architecture and the
+technology choices behind it. Use the navigation on the left to jump to a specific
+area:
 
-* `mkdocs new [dir-name]` - Create a new project.
-* `mkdocs serve` - Start the live-reloading docs server.
-* `mkdocs build` - Build the documentation site.
-* `mkdocs -h` - Print help message and exit.
+- **Architecture** — overall system shape, backend module structure, and schema design decisions
+- **Frontend** — React, TanStack Query, React Router
+- **Backend** — Node.js/Express, REST API, Prisma
+- **Data & Storage** — Supabase (PostgreSQL), Auth, Storage
+- **Scheduling** — round lifecycle automation
+- **External Integration** — EmailJS
+- **Testing** — backend and frontend testing strategy
+- **CI/CD & Hosting** — pipeline and hosting providers
+- **Version Control** — branching, commits, versioning
+- **Methodology** — project management approach
 
-## Project layout
-
-    mkdocs.yml    # The configuration file.
-    docs/
-        index.md  # The documentation homepage.
-        ...       # Other markdown pages, images and other files.
+!!! info "AI Declaration"
+    This documentation was adapted from the team's Technology Stack and Architecture
+    document, which was generated with Claude-Web (Claude Sonnet 5).
