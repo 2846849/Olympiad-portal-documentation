@@ -3,6 +3,8 @@
 **COMS3011A Project 5 — Olympiad Portal**
 **Team:** Prompt Engineers
 
+[visit the Olympiad portal site](https://frontend-nine-pink-19.vercel.app/)
+
 This section of the documentation site describes the system's architecture and the
 technology choices behind it. Use the navigation on the left to jump to a specific
 area:
