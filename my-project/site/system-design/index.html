@@ -847,13 +847,52 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#models-14-total" class="md-nav__link">
+  <a href="#models" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Models (14 total)
+        Models
       
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="Models">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#identity-access" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Identity &amp; access
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#competition-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Competition structure
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#content-submissions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Content &amp; submissions
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -873,6 +912,17 @@
     <span class="md-ellipsis">
       
         Design Decisions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deployment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Deployment
       
     </span>
   </a>
@@ -1395,13 +1445,52 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#models-14-total" class="md-nav__link">
+  <a href="#models" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Models (14 total)
+        Models
       
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="Models">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#identity-access" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Identity &amp; access
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#competition-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Competition structure
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#content-submissions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Content &amp; submissions
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -1421,6 +1510,17 @@
     <span class="md-ellipsis">
       
         Design Decisions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deployment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Deployment
       
     </span>
   </a>
@@ -1736,97 +1836,159 @@ React Router, React Query      &gt; Services &gt; Prisma           Supabase Auth
 <p>The full, current list of endpoints with request/response shapes lives in one place to avoid drift: see the <a href="../api/">API Reference</a>.</p>
 <hr />
 <h2 id="3-database-design">3. Database Design</h2>
+<blockquote>
+<p>This section documents <code>backend/prisma/schema.prisma</code> as it actually exists in the codebase — not an aspirational or planned schema. It is regenerated whenever the schema changes so the two never drift apart.</p>
+</blockquote>
 <h3 id="entity-relationship-diagram">Entity-Relationship Diagram</h3>
-<pre><code>users ─────┬──── invitations
-           ├──── olympiads ────── rounds ────┬──── papers ────── questions
-           │              │                  │                     │
-           │              │                  ├──── submissions ──── answers
-           │              │                  │
-           │              │                  └──── results
-           │              │
-           │              └──── school_registrations ──── schools ────┬──── educators
-           │                                                          │
-           └──── entrants ───── entrant_registrations ────────────────┘
+<pre><code>users ──┬── invitations (sent_by / claimed_by)
+        ├── school_memberships ──── schools ──┬── educators
+        │                                      ├── entrants
+        │                                      ├── invitations
+        │                                      └── school_registrations ── olympiads
+        ├── educators
+        ├── entrants
+        ├── olympiads (organiser) ──┬── rounds ──┬── papers ── questions ── answers
+        │                            │            ├── submissions ── answers
+        │                            │            ├── entrant_registrations
+        │                            │            └── results
+        │                            ├── school_registrations
+        │                            └── notification_rules
+        └── answers (marked_by)
 </code></pre>
-<h3 id="models-14-total">Models (14 total)</h3>
+<h3 id="models">Models</h3>
+<p>Sixteen models, grouped by domain. "Constraints" lists anything beyond a plain column: primary keys, uniqueness, defaults, and <code>onDelete</code> behaviour.</p>
+<h4 id="identity-access">Identity &amp; access</h4>
 <table>
 <thead>
 <tr>
 <th>Model</th>
-<th>Key Fields</th>
+<th>Fields</th>
+<th>Constraints</th>
 <th>Purpose</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>users</td>
-<td>id, email, full_name, role, auth_provider_id</td>
-<td>Core user accounts (organiser, educator, student)</td>
+<td><code>users</code></td>
+<td>id, email, full_name, auth_provider_id?, created_at, deleted_at?, role</td>
+<td>PK <code>id</code> (uuid); <code>email</code> unique</td>
+<td>Core account for every organiser, educator, and student. <code>deleted_at</code> supports soft delete so historical submissions/results stay attributable after account deletion.</td>
 </tr>
 <tr>
-<td>invitations</td>
-<td>code, type, olympiad_id, school_id, expires_at</td>
-<td>Invitation-based registration with expiry</td>
+<td><code>invitations</code></td>
+<td>id, code, token_hash?, type, intended_school_role?, school_name?, olympiad_id?, school_id?, email?, used_by_id?, accepted_at?, created_by_id?, expires_at, created_at</td>
+<td>PK <code>id</code>; <code>code</code> unique; <code>token_hash</code> unique; indexes on <code>code</code>, <code>school_id</code>, <code>olympiad_id</code></td>
+<td>Backs both invitation mechanisms described in the API reference: short codes (<code>code</code>) and emailed link tokens (<code>token_hash</code>, stored hashed rather than in plaintext so a leaked log line can't be used to claim an invite). <code>intended_school_role</code> lets a single invitation pre-assign <code>coordinator</code> vs <code>educator</code> before the invitee even exists as a user.</td>
 </tr>
 <tr>
-<td>schools</td>
-<td>name, address</td>
-<td>School records</td>
+<td><code>schools</code></td>
+<td>id, name, address?, created_at</td>
+<td>PK <code>id</code></td>
+<td>A registered school.</td>
 </tr>
 <tr>
-<td>educators</td>
-<td>user_id, school_id</td>
-<td>Links users to schools</td>
+<td><code>school_memberships</code></td>
+<td>id, user_id, school_id, role, status, created_at</td>
+<td>PK <code>id</code>; unique <code>[user_id, school_id]</code>; index <code>[school_id, role, status]</code></td>
+<td>The permission layer for school-side access: a user's <code>role</code> (<code>coordinator</code>/<code>educator</code>) and <code>status</code> (<code>active</code>/<code>removed</code>) at a given school. This is what the API's "coordinator" checks (e.g. inviting another educator) actually query — see below for why it's separate from <code>educators</code>.</td>
 </tr>
 <tr>
-<td>entrants</td>
-<td>user_id, school_id, full_name, grade</td>
-<td>Student participants</td>
+<td><code>educators</code></td>
+<td>id, user_id, school_id, created_at</td>
+<td>PK <code>id</code>; <code>user_id</code> unique</td>
+<td>The stable identity that owns educator-authored records (<code>submissions.submitted_by</code>, <code>entrant_registrations.registered_by</code>). One row per user, one school.</td>
 </tr>
 <tr>
-<td>olympiads</td>
-<td>name, organiser_id, timezone</td>
-<td>Competition events</td>
+<td><code>entrants</code></td>
+<td>id, user_id?, school_id, full_name, grade?, external_ref?, created_at</td>
+<td>PK <code>id</code>; <code>user_id</code> unique</td>
+<td>A student participant. <code>user_id</code> is nullable because an entrant can exist (registered by their educator) before they ever sign up for their own login; <code>external_ref</code> supports matching entrants against an external school register.</td>
+</tr>
+</tbody>
+</table>
+<h4 id="competition-structure">Competition structure</h4>
+<table>
+<thead>
+<tr>
+<th>Model</th>
+<th>Fields</th>
+<th>Constraints</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>olympiads</code></td>
+<td>id, name, organiser_id, timezone, created_at</td>
+<td>PK <code>id</code>; default <code>timezone = "Africa/Johannesburg"</code></td>
+<td>A competition owned by one organiser.</td>
 </tr>
 <tr>
-<td>school_registrations</td>
-<td>school_id, olympiad_id</td>
-<td>Many-to-many: schools to olympiads</td>
+<td><code>school_registrations</code></td>
+<td>id, school_id, olympiad_id, registered_at, status</td>
+<td>PK <code>id</code>; unique <code>[school_id, olympiad_id]</code>; default <code>status = approved</code></td>
+<td>Many-to-many join between schools and olympiads.</td>
 </tr>
 <tr>
-<td>rounds</td>
-<td>olympiad_id, name, opens_at, closes_at, state, qualifying_threshold</td>
-<td>Competition rounds with lifecycle state</td>
+<td><code>rounds</code></td>
+<td>id, olympiad_id, name, notes?, opens_at, closes_at, results_release_at?, state, exam_status, approved_by?, approved_at?, qualifying_threshold?, created_at</td>
+<td>PK <code>id</code>; index <code>[state, opens_at, closes_at]</code></td>
+<td>A round within an olympiad. <code>state</code> (scheduled → open → closed → marking → results_released) drives the overall timeline; <code>exam_status</code> (draft → ready → live) is a <em>separate</em> gate specifically for online sitting, so an organiser can prep and approve the exam independently of whether the round has opened yet. The composite index supports the lifecycle poller's query for rounds crossing a time threshold.</td>
 </tr>
 <tr>
-<td>papers</td>
-<td>round_id, file_url, memo_file_url, is_archived</td>
-<td>Question papers and memos</td>
+<td><code>notification_rules</code></td>
+<td>id, olympiad_id, name, trigger, offset_minutes, recipient, channel, condition?, enabled, created_at, updated_at</td>
+<td>PK <code>id</code>; index <code>[olympiad_id, enabled]</code></td>
+<td>Organiser-configured comms rules (e.g. "remind registered educators 60 minutes before a round closes").</td>
+</tr>
+</tbody>
+</table>
+<h4 id="content-submissions">Content &amp; submissions</h4>
+<table>
+<thead>
+<tr>
+<th>Model</th>
+<th>Fields</th>
+<th>Constraints</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>papers</code></td>
+<td>id, round_id, title, file_url?, memo_file_url?, is_archived, released_at?, created_at</td>
+<td>PK <code>id</code></td>
+<td>The question paper and memo for a round.</td>
 </tr>
 <tr>
-<td>questions</td>
-<td>paper_id, type, prompt, options, correct_option, max_points</td>
-<td>Individual questions (mcq, short_answer, essay)</td>
+<td><code>questions</code></td>
+<td>id, paper_id, type, prompt, options?, correct_option?, correct_answer?, negative_pct, max_points, created_at</td>
+<td>PK <code>id</code>; defaults <code>negative_pct = 0</code>, <code>max_points = 1</code></td>
+<td>One question on a paper (<code>mcq</code>, <code>true_false</code>, <code>short_answer</code>, or <code>essay</code>).</td>
 </tr>
 <tr>
-<td>answers</td>
-<td>submission_id, question_id, answer_value, is_correct, points_awarded</td>
-<td>Student answers with marking data</td>
+<td><code>submissions</code></td>
+<td>id, round_id, entrant_id, submitted_by?, route, status, is_late, idempotency_key, received_at, round_close_snapshot, created_at</td>
+<td>PK <code>id</code>; <code>idempotency_key</code> unique; unique <code>[round_id, entrant_id, route]</code></td>
+<td>One entrant's attempt at a round via one route. <code>idempotency_key</code> guarantees a retried network request is never double-counted. <code>round_close_snapshot</code> freezes the round's <code>closes_at</code> value <em>at the moment the submission is received</em>, so a later edit to the round's schedule can't retroactively change whether a past submission was on time.</td>
 </tr>
 <tr>
-<td>submissions</td>
-<td>round_id, entrant_id, route, status, idempotency_key</td>
-<td>Submission tracking (online/offline)</td>
+<td><code>answers</code></td>
+<td>id, submission_id, question_id, answer_value?, is_correct?, points_awarded?, marked_by?, marked_at?</td>
+<td>PK <code>id</code>; unique <code>[submission_id, question_id]</code></td>
+<td>One answer to one question within a submission; carries its own marking state and marker.</td>
 </tr>
 <tr>
-<td>entrant_registrations</td>
-<td>entrant_id, round_id, registered_by</td>
-<td>Which entrants are in which rounds</td>
+<td><code>entrant_registrations</code></td>
+<td>id, entrant_id, round_id, registered_by, status, created_at</td>
+<td>PK <code>id</code>; unique <code>[entrant_id, round_id]</code>; default <code>status = "registered"</code></td>
+<td>Which entrants are entered for which round, and by which educator.</td>
 </tr>
 <tr>
-<td>results</td>
-<td>round_id, entrant_id, total_points, rank, qualified</td>
-<td>Final scores and rankings</td>
+<td><code>results</code></td>
+<td>id, round_id, entrant_id, total_points, rank?, qualified, finalised_at?</td>
+<td>PK <code>id</code>; unique <code>[round_id, entrant_id]</code>; index <code>[round_id, rank]</code></td>
+<td>The finalised score/rank/qualification for one entrant in one round, written once marking is complete rather than computed on every read — standings are read far more often than they're recalculated.</td>
 </tr>
 </tbody>
 </table>
@@ -1840,36 +2002,70 @@ React Router, React Query      &gt; Services &gt; Prisma           Supabase Auth
 </thead>
 <tbody>
 <tr>
-<td>user_role</td>
-<td>organiser, educator, student</td>
+<td><code>user_role</code></td>
+<td><code>organiser</code>, <code>educator</code>, <code>student</code></td>
 </tr>
 <tr>
-<td>invite_type</td>
-<td>school, educator, student</td>
+<td><code>invite_type</code></td>
+<td><code>school</code>, <code>educator</code>, <code>student</code></td>
 </tr>
 <tr>
-<td>round_state</td>
-<td>scheduled, open, closed, marking, results_released</td>
+<td><code>school_role</code></td>
+<td><code>coordinator</code>, <code>educator</code></td>
 </tr>
 <tr>
-<td>submission_route</td>
-<td>online, offline</td>
+<td><code>membership_status</code></td>
+<td><code>active</code>, <code>removed</code></td>
 </tr>
 <tr>
-<td>submission_status</td>
-<td>received, automarked, queued_for_marking, marked, moderated</td>
+<td><code>registration_status</code></td>
+<td><code>pending</code>, <code>approved</code>, <code>withdrawn</code></td>
+</tr>
+<tr>
+<td><code>round_state</code></td>
+<td><code>scheduled</code>, <code>open</code>, <code>closed</code>, <code>marking</code>, <code>results_released</code></td>
+</tr>
+<tr>
+<td><code>exam_status</code></td>
+<td><code>draft</code>, <code>ready</code>, <code>live</code></td>
+</tr>
+<tr>
+<td><code>submission_route</code></td>
+<td><code>online</code>, <code>offline</code></td>
+</tr>
+<tr>
+<td><code>submission_status</code></td>
+<td><code>received</code>, <code>automarked</code>, <code>queued_for_marking</code>, <code>marked</code>, <code>moderated</code></td>
+</tr>
+<tr>
+<td><code>notification_trigger</code></td>
+<td><code>round_opens</code>, <code>round_closes</code>, <code>results_released</code></td>
+</tr>
+<tr>
+<td><code>notification_recipient</code></td>
+<td><code>registered_educators</code>, <code>registered_schools</code>, <code>qualifying_entrants</code></td>
+</tr>
+<tr>
+<td><code>notification_channel</code></td>
+<td><code>email</code></td>
 </tr>
 </tbody>
 </table>
 <h3 id="design-decisions">Design Decisions</h3>
 <ul>
-<li><strong>UUIDs</strong> for all primary keys — prevents enumeration, safe in URLs</li>
-<li><strong>Soft delete</strong> on users (deleted_at column) — preserves referential integrity</li>
-<li><strong>timestamptz(6)</strong> on all timestamps — timezone-aware precision for deadlines</li>
-<li><strong>Composite unique constraints</strong> — submissions(round_id, entrant_id, route) prevents duplicates; entrant_registrations(entrant_id, round_id) prevents double registration</li>
-<li><strong>Indexes</strong> — rounds(state, opens_at, closes_at) for lifecycle queries; results(round_id, rank) for leaderboards</li>
-<li><strong>Idempotency key</strong> on submissions — prevents double-submission on network retries</li>
+<li><strong>UUIDs (<code>gen_random_uuid()</code>) for all primary keys</strong> — generated in Postgres, safe to expose in URLs, and don't leak insertion order or row counts the way a sequential ID would.</li>
+<li><strong>Soft delete only on <code>users</code></strong> (<code>deleted_at</code>) — a deleted account's historical submissions, results, and marking records stay intact and attributable rather than cascading into orphaned or deleted rows.</li>
+<li><strong><code>timestamptz(6)</code> on every temporal column</strong> — timezone-aware precision, needed both for deadline enforcement today and for the multi-timezone, multi-olympiad case the schema already has room for (<code>olympiads.timezone</code>).</li>
+<li><strong><code>school_memberships</code> alongside <code>educators</code>, not instead of it</strong> — <code>educators</code> is the stable identity that other tables' foreign keys point to (<code>submissions.submitted_by</code>, <code>entrant_registrations.registered_by</code>), so it isn't churned as permissions change. <code>school_memberships</code> is the more flexible role/status layer actually queried for authorisation (e.g. "does this user have an active <code>coordinator</code> membership at this school?"), and its <code>status</code> field lets access be revoked (<code>removed</code>) without deleting the historical link.</li>
+<li><strong><code>invitations.token_hash</code> stored hashed, separately from <code>code</code></strong> — link-based invites and short-code invites are both supported, but a hashed, independently-unique token means a link token can't be brute-forced or replayed the way a short human-typed code more plausibly could be.</li>
+<li><strong>Composite unique constraints</strong> — <code>submissions(round_id, entrant_id, route)</code> stops the same entrant submitting twice via the same route; <code>entrant_registrations(entrant_id, round_id)</code> stops double registration; <code>answers(submission_id, question_id)</code> stops duplicate answer rows.</li>
+<li><strong><code>submissions.round_close_snapshot</code></strong> — captures the round's close time at the moment of receipt, so a dispute over "was this on time" is answered from an immutable record even if the round's schedule is edited afterwards.</li>
+<li><strong><code>submissions.idempotency_key</code></strong> — enforced as a database-level unique constraint (not just application logic), so a retried request from a flaky connection can never be counted twice.</li>
+<li><strong><code>rounds.exam_status</code> kept separate from <code>rounds.state</code></strong> — lets an organiser prepare and approve the online exam (<code>draft</code> → <code>ready</code> → <code>live</code>) independently of the round's own open/closed timeline.</li>
+<li><strong>Indexes chosen for known query patterns</strong> — <code>rounds(state, opens_at, closes_at)</code> for the lifecycle service's polling query; <code>results(round_id, rank)</code> for standings/leaderboard reads.</li>
 </ul>
+<h3 id="deployment">Deployment</h3>
+<p>The schema is deployed as managed <strong>PostgreSQL on Supabase</strong> (see <a href="../data-storage/">Data and Storage</a> for why Supabase was chosen). <code>backend/prisma/schema.prisma</code>, shown above, is the single source of truth: schema changes are made there, Prisma generates a migration, and the same <code>DATABASE_URL</code> environment variable is used to apply it in local development and against the hosted Supabase instance in deployment (see <a href="../cicd-hosting/">CI/CD and Hosting</a> for the deployment pipeline itself). The generated Prisma client (<code>../generated/prisma</code>) gives the backend type-safe queries against this exact schema, so a mismatch between the documented schema and the running database would fail at build time rather than surface as a runtime bug.</p>
 <hr />
 <h2 id="4-core-behaviours">4. Core Behaviours</h2>
 <h3 id="authentication-flow">Authentication Flow</h3>

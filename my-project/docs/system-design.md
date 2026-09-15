@@ -73,58 +73,95 @@ The full, current list of endpoints with request/response shapes lives in one pl
 
 ## 3. Database Design
 
+> This section documents `backend/prisma/schema.prisma` as it actually exists in the codebase — not an aspirational or planned schema. It is regenerated whenever the schema changes so the two never drift apart.
+
 ### Entity-Relationship Diagram
 
 ```
-users ─────┬──── invitations
-           ├──── olympiads ────── rounds ────┬──── papers ────── questions
-           │              │                  │                     │
-           │              │                  ├──── submissions ──── answers
-           │              │                  │
-           │              │                  └──── results
-           │              │
-           │              └──── school_registrations ──── schools ────┬──── educators
-           │                                                          │
-           └──── entrants ───── entrant_registrations ────────────────┘
+users ──┬── invitations (sent_by / claimed_by)
+        ├── school_memberships ──── schools ──┬── educators
+        │                                      ├── entrants
+        │                                      ├── invitations
+        │                                      └── school_registrations ── olympiads
+        ├── educators
+        ├── entrants
+        ├── olympiads (organiser) ──┬── rounds ──┬── papers ── questions ── answers
+        │                            │            ├── submissions ── answers
+        │                            │            ├── entrant_registrations
+        │                            │            └── results
+        │                            ├── school_registrations
+        │                            └── notification_rules
+        └── answers (marked_by)
 ```
 
-### Models (14 total)
+### Models
 
-| Model                 | Key Fields                                                           | Purpose                                           |
-| --------------------- | -------------------------------------------------------------------- | ------------------------------------------------- |
-| users                 | id, email, full_name, role, auth_provider_id                         | Core user accounts (organiser, educator, student) |
-| invitations           | code, type, olympiad_id, school_id, expires_at                       | Invitation-based registration with expiry         |
-| schools               | name, address                                                        | School records                                    |
-| educators             | user_id, school_id                                                   | Links users to schools                            |
-| entrants              | user_id, school_id, full_name, grade                                 | Student participants                              |
-| olympiads             | name, organiser_id, timezone                                         | Competition events                                |
-| school_registrations  | school_id, olympiad_id                                               | Many-to-many: schools to olympiads                |
-| rounds                | olympiad_id, name, opens_at, closes_at, state, qualifying_threshold  | Competition rounds with lifecycle state           |
-| papers                | round_id, file_url, memo_file_url, is_archived                       | Question papers and memos                         |
-| questions             | paper_id, type, prompt, options, correct_option, max_points          | Individual questions (mcq, short_answer, essay)   |
-| answers               | submission_id, question_id, answer_value, is_correct, points_awarded | Student answers with marking data                 |
-| submissions           | round_id, entrant_id, route, status, idempotency_key                 | Submission tracking (online/offline)              |
-| entrant_registrations | entrant_id, round_id, registered_by                                  | Which entrants are in which rounds                |
-| results               | round_id, entrant_id, total_points, rank, qualified                  | Final scores and rankings                         |
+Sixteen models, grouped by domain. "Constraints" lists anything beyond a plain column: primary keys, uniqueness, defaults, and `onDelete` behaviour.
+
+#### Identity & access
+
+| Model | Fields | Constraints | Purpose |
+|---|---|---|---|
+| `users` | id, email, full_name, auth_provider_id?, created_at, deleted_at?, role | PK `id` (uuid); `email` unique | Core account for every organiser, educator, and student. `deleted_at` supports soft delete so historical submissions/results stay attributable after account deletion. |
+| `invitations` | id, code, token_hash?, type, intended_school_role?, school_name?, olympiad_id?, school_id?, email?, used_by_id?, accepted_at?, created_by_id?, expires_at, created_at | PK `id`; `code` unique; `token_hash` unique; indexes on `code`, `school_id`, `olympiad_id` | Backs both invitation mechanisms described in the API reference: short codes (`code`) and emailed link tokens (`token_hash`, stored hashed rather than in plaintext so a leaked log line can't be used to claim an invite). `intended_school_role` lets a single invitation pre-assign `coordinator` vs `educator` before the invitee even exists as a user. |
+| `schools` | id, name, address?, created_at | PK `id` | A registered school. |
+| `school_memberships` | id, user_id, school_id, role, status, created_at | PK `id`; unique `[user_id, school_id]`; index `[school_id, role, status]` | The permission layer for school-side access: a user's `role` (`coordinator`/`educator`) and `status` (`active`/`removed`) at a given school. This is what the API's "coordinator" checks (e.g. inviting another educator) actually query — see below for why it's separate from `educators`. |
+| `educators` | id, user_id, school_id, created_at | PK `id`; `user_id` unique | The stable identity that owns educator-authored records (`submissions.submitted_by`, `entrant_registrations.registered_by`). One row per user, one school. |
+| `entrants` | id, user_id?, school_id, full_name, grade?, external_ref?, created_at | PK `id`; `user_id` unique | A student participant. `user_id` is nullable because an entrant can exist (registered by their educator) before they ever sign up for their own login; `external_ref` supports matching entrants against an external school register. |
+
+#### Competition structure
+
+| Model | Fields | Constraints | Purpose |
+|---|---|---|---|
+| `olympiads` | id, name, organiser_id, timezone, created_at | PK `id`; default `timezone = "Africa/Johannesburg"` | A competition owned by one organiser. |
+| `school_registrations` | id, school_id, olympiad_id, registered_at, status | PK `id`; unique `[school_id, olympiad_id]`; default `status = approved` | Many-to-many join between schools and olympiads. |
+| `rounds` | id, olympiad_id, name, notes?, opens_at, closes_at, results_release_at?, state, exam_status, approved_by?, approved_at?, qualifying_threshold?, created_at | PK `id`; index `[state, opens_at, closes_at]` | A round within an olympiad. `state` (scheduled → open → closed → marking → results_released) drives the overall timeline; `exam_status` (draft → ready → live) is a *separate* gate specifically for online sitting, so an organiser can prep and approve the exam independently of whether the round has opened yet. The composite index supports the lifecycle poller's query for rounds crossing a time threshold. |
+| `notification_rules` | id, olympiad_id, name, trigger, offset_minutes, recipient, channel, condition?, enabled, created_at, updated_at | PK `id`; index `[olympiad_id, enabled]` | Organiser-configured comms rules (e.g. "remind registered educators 60 minutes before a round closes"). |
+
+#### Content & submissions
+
+| Model | Fields | Constraints | Purpose |
+|---|---|---|---|
+| `papers` | id, round_id, title, file_url?, memo_file_url?, is_archived, released_at?, created_at | PK `id` | The question paper and memo for a round. |
+| `questions` | id, paper_id, type, prompt, options?, correct_option?, correct_answer?, negative_pct, max_points, created_at | PK `id`; defaults `negative_pct = 0`, `max_points = 1` | One question on a paper (`mcq`, `true_false`, `short_answer`, or `essay`). |
+| `submissions` | id, round_id, entrant_id, submitted_by?, route, status, is_late, idempotency_key, received_at, round_close_snapshot, created_at | PK `id`; `idempotency_key` unique; unique `[round_id, entrant_id, route]` | One entrant's attempt at a round via one route. `idempotency_key` guarantees a retried network request is never double-counted. `round_close_snapshot` freezes the round's `closes_at` value *at the moment the submission is received*, so a later edit to the round's schedule can't retroactively change whether a past submission was on time. |
+| `answers` | id, submission_id, question_id, answer_value?, is_correct?, points_awarded?, marked_by?, marked_at? | PK `id`; unique `[submission_id, question_id]` | One answer to one question within a submission; carries its own marking state and marker. |
+| `entrant_registrations` | id, entrant_id, round_id, registered_by, status, created_at | PK `id`; unique `[entrant_id, round_id]`; default `status = "registered"` | Which entrants are entered for which round, and by which educator. |
+| `results` | id, round_id, entrant_id, total_points, rank?, qualified, finalised_at? | PK `id`; unique `[round_id, entrant_id]`; index `[round_id, rank]` | The finalised score/rank/qualification for one entrant in one round, written once marking is complete rather than computed on every read — standings are read far more often than they're recalculated. |
 
 ### Enums
 
-| Enum              | Values                                                      |
-| ----------------- | ----------------------------------------------------------- |
-| user_role         | organiser, educator, student                                |
-| invite_type       | school, educator, student                                   |
-| round_state       | scheduled, open, closed, marking, results_released          |
-| submission_route  | online, offline                                             |
-| submission_status | received, automarked, queued_for_marking, marked, moderated |
+| Enum | Values |
+|---|---|
+| `user_role` | `organiser`, `educator`, `student` |
+| `invite_type` | `school`, `educator`, `student` |
+| `school_role` | `coordinator`, `educator` |
+| `membership_status` | `active`, `removed` |
+| `registration_status` | `pending`, `approved`, `withdrawn` |
+| `round_state` | `scheduled`, `open`, `closed`, `marking`, `results_released` |
+| `exam_status` | `draft`, `ready`, `live` |
+| `submission_route` | `online`, `offline` |
+| `submission_status` | `received`, `automarked`, `queued_for_marking`, `marked`, `moderated` |
+| `notification_trigger` | `round_opens`, `round_closes`, `results_released` |
+| `notification_recipient` | `registered_educators`, `registered_schools`, `qualifying_entrants` |
+| `notification_channel` | `email` |
 
 ### Design Decisions
 
-- **UUIDs** for all primary keys — prevents enumeration, safe in URLs
-- **Soft delete** on users (deleted_at column) — preserves referential integrity
-- **timestamptz(6)** on all timestamps — timezone-aware precision for deadlines
-- **Composite unique constraints** — submissions(round_id, entrant_id, route) prevents duplicates; entrant_registrations(entrant_id, round_id) prevents double registration
-- **Indexes** — rounds(state, opens_at, closes_at) for lifecycle queries; results(round_id, rank) for leaderboards
-- **Idempotency key** on submissions — prevents double-submission on network retries
+- **UUIDs (`gen_random_uuid()`) for all primary keys** — generated in Postgres, safe to expose in URLs, and don't leak insertion order or row counts the way a sequential ID would.
+- **Soft delete only on `users`** (`deleted_at`) — a deleted account's historical submissions, results, and marking records stay intact and attributable rather than cascading into orphaned or deleted rows.
+- **`timestamptz(6)` on every temporal column** — timezone-aware precision, needed both for deadline enforcement today and for the multi-timezone, multi-olympiad case the schema already has room for (`olympiads.timezone`).
+- **`school_memberships` alongside `educators`, not instead of it** — `educators` is the stable identity that other tables' foreign keys point to (`submissions.submitted_by`, `entrant_registrations.registered_by`), so it isn't churned as permissions change. `school_memberships` is the more flexible role/status layer actually queried for authorisation (e.g. "does this user have an active `coordinator` membership at this school?"), and its `status` field lets access be revoked (`removed`) without deleting the historical link.
+- **`invitations.token_hash` stored hashed, separately from `code`** — link-based invites and short-code invites are both supported, but a hashed, independently-unique token means a link token can't be brute-forced or replayed the way a short human-typed code more plausibly could be.
+- **Composite unique constraints** — `submissions(round_id, entrant_id, route)` stops the same entrant submitting twice via the same route; `entrant_registrations(entrant_id, round_id)` stops double registration; `answers(submission_id, question_id)` stops duplicate answer rows.
+- **`submissions.round_close_snapshot`** — captures the round's close time at the moment of receipt, so a dispute over "was this on time" is answered from an immutable record even if the round's schedule is edited afterwards.
+- **`submissions.idempotency_key`** — enforced as a database-level unique constraint (not just application logic), so a retried request from a flaky connection can never be counted twice.
+- **`rounds.exam_status` kept separate from `rounds.state`** — lets an organiser prepare and approve the online exam (`draft` → `ready` → `live`) independently of the round's own open/closed timeline.
+- **Indexes chosen for known query patterns** — `rounds(state, opens_at, closes_at)` for the lifecycle service's polling query; `results(round_id, rank)` for standings/leaderboard reads.
+
+### Deployment
+
+The schema is deployed as managed **PostgreSQL on Supabase** (see [Data and Storage](data-storage.md) for why Supabase was chosen). `backend/prisma/schema.prisma`, shown above, is the single source of truth: schema changes are made there, Prisma generates a migration, and the same `DATABASE_URL` environment variable is used to apply it in local development and against the hosted Supabase instance in deployment (see [CI/CD and Hosting](cicd-hosting.md) for the deployment pipeline itself). The generated Prisma client (`../generated/prisma`) gives the backend type-safe queries against this exact schema, so a mismatch between the documented schema and the running database would fail at build time rather than surface as a runtime bug.
 
 ---
 

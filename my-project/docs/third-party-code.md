@@ -95,4 +95,3 @@ packages are MIT, Apache-2.0, BSD, and ISC.
 
 The package versions and their license information are recorded in the package
 manifests and lockfiles.
-
