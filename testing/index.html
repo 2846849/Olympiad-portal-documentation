@@ -12,7 +12,7 @@
         <link rel="prev" href="../external-integration/">
       
       
-        <link rel="next" href="../cicd-hosting/">
+        <link rel="next" href="../bug-tracking/">
       
       
         
@@ -74,7 +74,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#7-testing" class="md-skip">
+        <a href="#olympiad-portal-testing-documentation" class="md-skip">
           Skip to content
         </a>
       
@@ -578,24 +578,274 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#71-backend-testing" class="md-nav__link">
+  <a href="#1-testing-approach" class="md-nav__link">
     <span class="md-ellipsis">
       
-        7.1 Backend Testing
+        1. Testing approach
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Testing approach">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#current-results" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Current results
       
     </span>
   </a>
   
 </li>
+        
+      </ul>
+    </nav>
+  
+</li>
       
         <li class="md-nav__item">
-  <a href="#72-frontend-testing" class="md-nav__link">
+  <a href="#2-automated-testing-procedure" class="md-nav__link">
     <span class="md-ellipsis">
       
-        7.2 Frontend Testing
+        2. Automated testing procedure
       
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="2. Automated testing procedure">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-tools-and-why-they-were-chosen" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 Tools and why they were chosen
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-folder-layout" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 Folder layout
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-unit-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3 Unit tests
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#24-integration-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.4 Integration tests
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.4 Integration tests">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#backend-integration-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Backend integration tests
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#frontend-integration-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Frontend integration tests
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#25-api-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.5 API tests
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#26-end-to-end-e2e-tests-in-progress" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.6 End-to-end (E2E) tests — in progress
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#27-how-to-run-the-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.7 How to run the tests
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#28-continuous-integration-planned" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.8 Continuous integration — planned
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-test-policy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Test policy
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Test policy">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-when-tests-must-be-written" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 When tests must be written
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-before-code-is-merged" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 Before code is merged
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-how-tests-are-written" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3 How tests are written
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#34-handling-test-failures" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.4 Handling test failures
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-user-feedback-process" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. User feedback process
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. User feedback process">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-collecting-feedback" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 Collecting feedback
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-recording-and-triage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 Recording and triage
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-acting-on-feedback" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3 Acting on feedback
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -603,6 +853,34 @@
   
 </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../bug-tracking/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bug Tracking
+  
+
+    
+  </span>
+  
+  
+
+      </a>
     </li>
   
 
@@ -679,34 +957,6 @@
     
   
     Project Methodology
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../ai-declaration/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    AI Declaration
   
 
     
@@ -944,6 +1194,34 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ai-declaration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AI Declaration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -978,24 +1256,274 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#71-backend-testing" class="md-nav__link">
+  <a href="#1-testing-approach" class="md-nav__link">
     <span class="md-ellipsis">
       
-        7.1 Backend Testing
+        1. Testing approach
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Testing approach">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#current-results" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Current results
       
     </span>
   </a>
   
 </li>
+        
+      </ul>
+    </nav>
+  
+</li>
       
         <li class="md-nav__item">
-  <a href="#72-frontend-testing" class="md-nav__link">
+  <a href="#2-automated-testing-procedure" class="md-nav__link">
     <span class="md-ellipsis">
       
-        7.2 Frontend Testing
+        2. Automated testing procedure
       
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="2. Automated testing procedure">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-tools-and-why-they-were-chosen" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 Tools and why they were chosen
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-folder-layout" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 Folder layout
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-unit-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3 Unit tests
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#24-integration-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.4 Integration tests
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.4 Integration tests">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#backend-integration-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Backend integration tests
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#frontend-integration-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Frontend integration tests
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#25-api-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.5 API tests
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#26-end-to-end-e2e-tests-in-progress" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.6 End-to-end (E2E) tests — in progress
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#27-how-to-run-the-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.7 How to run the tests
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#28-continuous-integration-planned" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.8 Continuous integration — planned
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-test-policy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Test policy
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Test policy">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-when-tests-must-be-written" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 When tests must be written
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-before-code-is-merged" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 Before code is merged
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-how-tests-are-written" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3 How tests are written
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#34-handling-test-failures" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.4 Handling test failures
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-user-feedback-process" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. User feedback process
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. User feedback process">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-collecting-feedback" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 Collecting feedback
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-recording-and-triage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 Recording and triage
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-acting-on-feedback" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3 Acting on feedback
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1016,26 +1544,606 @@
 
 
 
-<h1 id="7-testing">7. Testing</h1>
-<p>The project currently uses <strong>Vitest</strong> as its sole testing tool, across both the
-backend and frontend, run in continuous integration on every pull request.</p>
-<p><strong>Why Vitest:</strong> the frontend is built with Vite (see <a href="../frontend/#21-framework-react">Frontend §2.1</a>),
-and Vitest is designed to share Vite's configuration, transforms, and dev-server
-pipeline directly — so no separate Jest/Babel setup is needed alongside the Vite
-build. Using the same runner for the backend keeps a single test tool and config
-style across the whole stack, rather than the group maintaining two different
-testing setups and mental models. Vitest's API is also Jest-compatible, so it
-doesn't introduce an unfamiliar testing paradigm for anyone on the team.</p>
-<h2 id="71-backend-testing">7.1 Backend Testing</h2>
-<p>Backend tests are written in Vitest, covering the API endpoints directly.</p>
-<h2 id="72-frontend-testing">7.2 Frontend Testing</h2>
-<p>Frontend tests are written in Vitest at the component level.</p>
-<p>!!! note "Not yet in use"
-    Supertest, React Testing Library, and Playwright are not currently part of the
-    test suite. As the project takes on the Intermediate and Advanced tiers —
-    particularly the submission-deadline and automatic-marking flows — end-to-end
-    coverage with a tool such as Playwright may be added; this section will be
-    updated if and when that happens.</p>
+<h1 id="olympiad-portal-testing-documentation">Olympiad Portal — Testing Documentation</h1>
+<p>This document covers how the Olympiad Portal is tested:</p>
+<ol>
+<li><a href="#1-testing-approach">Testing approach</a></li>
+<li><a href="#2-automated-testing-procedure">Automated testing procedure</a>: every type of automated test, why it is used, what it covers and how to run it</li>
+<li><a href="#3-test-policy">Test policy</a>: the rules the team follows for writing and running tests</li>
+<li><a href="#4-user-feedback-process">User feedback process</a>: how feedback from users is collected and acted on</li>
+</ol>
+<p>Bugs found during testing and user feedback are recorded in <a href="../bug-tracking/">bug-tracking.md</a>.</p>
+<hr />
+<h2 id="1-testing-approach">1. Testing approach</h2>
+<p>The portal has a React frontend and an Express + PostgreSQL backend used by three roles: organisers, educators and students. Tests are written at several levels. Each level answers a different question, from "does this function work?" to "can a real user finish their task in a real browser?".</p>
+<table>
+<thead>
+<tr>
+<th>Level</th>
+<th>Question it answers</th>
+<th>Speed</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Unit tests</td>
+<td>Does each function, component and hook work on its own?</td>
+<td>Very fast</td>
+<td>Done</td>
+</tr>
+<tr>
+<td>Integration tests</td>
+<td>Do the parts work together (services with a real database, full pages with the app's real logic)?</td>
+<td>Fast</td>
+<td>Done</td>
+</tr>
+<tr>
+<td>API tests</td>
+<td>Does every endpoint return the right status, data and errors, and enforce who may call it?</td>
+<td>Fast</td>
+<td>Done</td>
+</tr>
+<tr>
+<td>End-to-end (E2E) tests</td>
+<td>Can each role complete their real tasks in a real browser?</td>
+<td>Slower</td>
+<td>In progress</td>
+</tr>
+<tr>
+<td>Continuous integration (CI)</td>
+<td>Do all of the above pass on every push, before code is merged or deployed?</td>
+<td>Automatic</td>
+<td>Planned</td>
+</tr>
+</tbody>
+</table>
+<p>Most tests are unit, integration and API tests, because they are fast and point to the exact cause of a failure. A smaller number of E2E tests cover the most important user journeys from start to finish.</p>
+<h3 id="current-results">Current results</h3>
+<table>
+<thead>
+<tr>
+<th>Suite</th>
+<th>Location</th>
+<th>Tests</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Backend unit</td>
+<td><code>backend/tests/unit</code></td>
+<td>676</td>
+</tr>
+<tr>
+<td>Backend integration</td>
+<td><code>backend/tests/integration</code></td>
+<td>111</td>
+</tr>
+<tr>
+<td>Backend API</td>
+<td><code>backend/tests/api</code></td>
+<td>475</td>
+</tr>
+<tr>
+<td>Frontend unit</td>
+<td><code>frontend/tests/unit</code></td>
+<td>247</td>
+</tr>
+<tr>
+<td>Frontend integration</td>
+<td><code>frontend/tests/integration</code></td>
+<td>123</td>
+</tr>
+<tr>
+<td><strong>Total</strong></td>
+<td></td>
+<td><strong>1,632</strong></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>Coverage</th>
+<th>Statements</th>
+<th>Branches</th>
+<th>Functions</th>
+<th>Lines</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Backend unit</td>
+<td>99.4%</td>
+<td>97.5%</td>
+<td>99.6%</td>
+<td>99.5%</td>
+</tr>
+<tr>
+<td>Backend integration</td>
+<td>86.8%</td>
+<td>71.1%</td>
+<td>95.2%</td>
+<td>89.7%</td>
+</tr>
+<tr>
+<td>Backend API</td>
+<td>94.6%</td>
+<td>82.5%</td>
+<td>97.4%</td>
+<td>95.5%</td>
+</tr>
+<tr>
+<td>Frontend unit</td>
+<td>99.2%</td>
+<td>98.6%</td>
+<td>99.3%</td>
+<td>99.1%</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="2-automated-testing-procedure">2. Automated testing procedure</h2>
+<h3 id="21-tools-and-why-they-were-chosen">2.1 Tools and why they were chosen</h3>
+<table>
+<thead>
+<tr>
+<th>Tool</th>
+<th>Used for</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Jest</strong></td>
+<td>Backend unit, integration and API tests</td>
+<td>The standard test runner for Node.js. It includes mocking, coverage reports and parallel runs, so no extra libraries are needed.</td>
+</tr>
+<tr>
+<td><strong>Vitest</strong></td>
+<td>Frontend unit and integration tests</td>
+<td>Built for Vite, which the frontend already uses, so tests share the app's build configuration. Its API is almost the same as Jest's, so one style is used across the project.</td>
+</tr>
+<tr>
+<td><strong>React Testing Library</strong> + <strong>user-event</strong></td>
+<td>Frontend tests</td>
+<td>Tests use the page the way a user does: finding buttons by their label, typing and clicking. They check what the user sees, not internal code, so they keep working when code is reorganised.</td>
+</tr>
+<tr>
+<td><strong>jsdom</strong></td>
+<td>Frontend tests</td>
+<td>Simulates a browser inside Node, so components render without opening a real browser.</td>
+</tr>
+<tr>
+<td><strong>MSW</strong> (Mock Service Worker)</td>
+<td>Frontend integration tests</td>
+<td>Intercepts network requests and returns realistic backend responses. Pages run their real API client and logic, but no real server is needed.</td>
+</tr>
+<tr>
+<td><strong>PGlite</strong></td>
+<td>Backend integration and API tests</td>
+<td>The real PostgreSQL engine running inside the test process. Tests use a genuine Postgres database built from the project's migrations, with nothing to install (no Docker, no local database, no cloud database).</td>
+</tr>
+<tr>
+<td><strong>Supertest</strong></td>
+<td>Backend API tests</td>
+<td>Sends real HTTP requests to the Express app without starting a server on a port, and checks status codes, headers and response bodies.</td>
+</tr>
+<tr>
+<td><strong>Playwright</strong></td>
+<td>E2E tests</td>
+<td>Drives real browsers (Chromium, Firefox and WebKit) with one install. It runs headless in CI with no separate GUI runner, and records screenshots, videos and traces when a test fails.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="22-folder-layout">2.2 Folder layout</h3>
+<pre><code>backend/
+  jest.config.js                 unit tests
+  jest.integration.config.js     integration tests
+  jest.api.config.js             API tests
+  tests/
+    unit/                        controllers, services, middleware, routes, jobs, utils
+      helpers/                   database mock, fake request/response, controller test cases
+    integration/                 services and database working together
+      setup/                     starts the test database and empties it before each test
+      helpers/                   test data factories, fake Supabase and email
+    api/                         HTTP tests for every endpoint
+      helpers/                   request helpers and the list of all endpoints
+
+frontend/
+  vitest.config.ts               &quot;unit&quot; and &quot;integration&quot; projects
+  tests/
+    unit/                        components, hooks, helpers
+    integration/                 full pages through the real app
+      support/                   app renderer, network mocks, API-shaped test data
+
+e2e/                             Playwright E2E tests (in progress)
+</code></pre>
+<h3 id="23-unit-tests">2.3 Unit tests</h3>
+<p><strong>What they are:</strong> tests of a single function, component or hook, with everything it depends on replaced by a mock.</p>
+<p><strong>Why they are used:</strong> they run in seconds, so developers can run them after every change. A failing unit test points to one exact piece of code, which makes problems quick to find. They also make it practical to check every branch of the logic, such as each validation rule and each error case.</p>
+<p><strong>Backend: what is tested</strong>
+- <strong>Services:</strong> the business logic, meaning authentication and invitations, olympiads, rounds, questions, papers, submissions, marking, marking maths, results, the round lifecycle, schools, notification rules, and the educator and student views.
+- <strong>Controllers:</strong> each one calls the right service with values from the request and returns the right status code and response.
+- <strong>Middleware:</strong> authentication and roles, validation, error handling and rate limiting.
+- <strong>Routes with their own logic:</strong> exam sitting and exam status.
+- <strong>Other:</strong> the scheduled round-lifecycle job, the email sender, invitation code helpers and error classes.</p>
+<p><strong>Backend: how</strong>
+- The database client (Prisma) is replaced by a mock, so each test decides what the database returns and checks what the code asked for.
+- Supabase and email are mocked, so no external service is contacted.</p>
+<p><strong>Frontend: what is tested</strong>
+- UI components: buttons, form controls, display components and the page layout.
+- The API client, Supabase client, login and logout helpers, and data-fetching hooks.
+- Page building blocks:
+  - the question form and question cards
+  - the answer-marking card and the answer-key correction editor
+  - the school invitation form
+  - round status labels and dashboard helpers
+  - exam timer and exam answer storage</p>
+<p><strong>Frontend: how</strong> — each piece is rendered on its own, and its API calls and services are mocked.</p>
+<h3 id="24-integration-tests">2.4 Integration tests</h3>
+<p><strong>What they are:</strong> tests that check several real parts working together.</p>
+<p><strong>Why they are used:</strong> unit tests mock the pieces around the code, so they can't catch problems in how pieces fit together. Examples are a database constraint, a transaction, a page that reads a field the API doesn't send, or a value arriving as text instead of a number. Integration tests catch these while staying fast and not needing any external service.</p>
+<h4 id="backend-integration-tests">Backend integration tests</h4>
+<p>Real services and the real Prisma client work with a real PostgreSQL database.</p>
+<p><strong>Test database strategy</strong>
+1. When the test run starts, an in-memory PostgreSQL database (PGlite) is created. Every migration in <code>prisma/migrations</code> is applied in order, which also confirms the migrations build a working database from scratch.
+2. The app connects to it through its normal database code; only the connection address changes.
+3. Every setting the app reads is set to a safe test value before the app loads, so a developer's real <code>.env</code> file (with production credentials) is never used.
+4. Every table is emptied before each test, so tests never depend on each other. The reset refuses to run against anything except the local test database.
+5. Test files run one at a time because they share the database.
+6. Test data is created with factories (organisers, olympiads, schools, educators, rounds, papers, questions, learners, students, invitations) so every test starts from a clear, realistic setup.
+7. Supabase Auth, Supabase Storage and email are replaced by fakes.</p>
+<table>
+<thead>
+<tr>
+<th>Test file</th>
+<th>What it covers</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>database.test.js</code></td>
+<td>All tables are created by the migrations; defaults, decimal values, unique constraints, cascading deletes and delete restrictions</td>
+</tr>
+<tr>
+<td><code>authAndInvitations.test.js</code></td>
+<td>The full invitation chain (organiser → school → educator → student), rollback when registration fails, authentication and school membership checks</td>
+</tr>
+<tr>
+<td><code>olympiadsAndRounds.test.js</code></td>
+<td>Creating and managing olympiads and rounds, round state changes, deleting rounds</td>
+</tr>
+<tr>
+<td><code>questionsAndExamStatus.test.js</code></td>
+<td>Building an exam and the draft → ready → live approval flow</td>
+</tr>
+<tr>
+<td><code>examSitting.test.js</code></td>
+<td>A student sitting an exam online: load, start, save answers, resume, submit and automatic marking</td>
+</tr>
+<tr>
+<td><code>submissionsMarkingResults.test.js</code></td>
+<td>Offline submissions, automatic marking, the marking queue, manual marking, generating results and the automatic round lifecycle</td>
+</tr>
+<tr>
+<td><code>educatorAndStudentViews.test.js</code></td>
+<td>Learner registration with round progression, results, past papers, and the student dashboard and results</td>
+</tr>
+<tr>
+<td><code>schoolsRulesAndPapers.test.js</code></td>
+<td>School lists, notification rules, paper upload, download and archive</td>
+</tr>
+</tbody>
+</table>
+<h4 id="frontend-integration-tests">Frontend integration tests</h4>
+<p>Whole pages run inside the real app, with its real routes, API client, Supabase client and data fetching. Only the network is faked, using MSW.</p>
+<p><strong>How</strong>
+- The real application is rendered at a chosen URL, and the test clicks, types and checks results as a user would.
+- MSW answers every request with data in exactly the backend's format, and records each request so tests can check what was sent. Any request without a prepared response fails the test.
+- Test data matches real API responses, including decimal values sent as text.</p>
+<table>
+<thead>
+<tr>
+<th>Test file</th>
+<th>What it covers</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>auth.test.tsx</code></td>
+<td>Log in for each role, organiser sign-up, sign-up with an invitation code or emailed link, error messages, log out</td>
+</tr>
+<tr>
+<td><code>organiserManagement.test.tsx</code></td>
+<td>Organiser dashboard, olympiads, schools, creating a round and uploading its paper</td>
+</tr>
+<tr>
+<td><code>notificationsAndArchive.test.tsx</code></td>
+<td>Announcement rules (create, enable, disable, delete) and the paper archive</td>
+</tr>
+<tr>
+<td><code>examReviewAndMarking.test.tsx</code></td>
+<td>Reviewing an exam against the memo, approving or sending it back, correcting answers, the marking queue and generating results</td>
+</tr>
+<tr>
+<td><code>examBuilder.test.tsx</code></td>
+<td>Adding each question type, editing, deleting, points totals and submitting the exam for review</td>
+</tr>
+<tr>
+<td><code>educatorPages.test.tsx</code></td>
+<td>Educator dashboard, round page (paper download, submitting results for each learner), entrants and invitations, results</td>
+</tr>
+<tr>
+<td><code>studentPages.test.tsx</code></td>
+<td>Student dashboard, round page (paper download, sitting online, results), results page</td>
+</tr>
+<tr>
+<td><code>examSitting.test.tsx</code></td>
+<td>Timer based on the server clock, autosave, flags, resuming, saving while offline, submitting when the connection returns, automatic submit when time runs out</td>
+</tr>
+</tbody>
+</table>
+<h3 id="25-api-tests">2.5 API tests</h3>
+<p><strong>What they are:</strong> real HTTP requests sent to the backend, going through every layer (routing, security middleware, validation, business logic and the database) and checking the actual response.</p>
+<p><strong>Why they are used:</strong> the frontend relies on the API behaving exactly as documented. API tests prove every endpoint returns the right status code, data and error message, and, most importantly, that each endpoint only lets the right people in. These are the rules that protect exam papers, answer keys, marks and learner data.</p>
+<p><strong>How</strong>
+- Supertest sends requests to the Express app.
+- The database is a real PostgreSQL database, set up exactly as in the integration tests.
+- Supabase Auth is faked so a test can sign in as any user, while user accounts and roles are still loaded from the real database.
+- Every response is checked against the standard format: <code>{ success, data }</code> or <code>{ success, error }</code>.</p>
+<p><strong>Every endpoint is covered.</strong> All 66 endpoints are listed in <code>backend/tests/api/helpers/endpoints.js</code> with the roles allowed to call each one. Using that list, the tests automatically check that:
+1. The list matches the route files exactly. If a new endpoint is added without being listed, the test run fails.
+2. Every protected endpoint returns <strong>401</strong> when no login token is sent.
+3. Every protected endpoint returns <strong>403</strong> for each role that is not allowed.
+4. Public endpoints can be reached without logging in.</p>
+<p>For each area, the tests then cover:
+- <strong>The normal case:</strong> correct request, correct response and data saved.
+- <strong>Ownership:</strong> users from another olympiad or school are refused.
+- <strong>Validation:</strong> invalid input returns <strong>422</strong> with a clear message.
+- <strong>Business rules and edge cases:</strong> for example, a round that isn't open yet, a duplicate submission or a file over the size limit.</p>
+<table>
+<thead>
+<tr>
+<th>Test file</th>
+<th>What it covers</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>endpoints.test.js</code></td>
+<td>The endpoint list, and authentication and role checks for every endpoint</td>
+</tr>
+<tr>
+<td><code>app.test.js</code></td>
+<td>Health check, unknown routes, security headers, CORS, rate limiting, malformed requests and invalid IDs, login token checks</td>
+</tr>
+<tr>
+<td><code>auth.test.js</code></td>
+<td>Registration, invitation codes and links, the current user, account deletion, every invitation endpoint</td>
+</tr>
+<tr>
+<td><code>olympiadsAndRounds.test.js</code></td>
+<td>Olympiads, rounds, schools, archive, notification rules, editing, state changes, deleting and paper upload</td>
+</tr>
+<tr>
+<td><code>examContent.test.js</code></td>
+<td>Questions, the exam approval flow, and links to papers and memos</td>
+</tr>
+<tr>
+<td><code>submissionsAndMarking.test.js</code></td>
+<td>Offline submissions, automatic marking, the marking queue, marking answers and generating results</td>
+</tr>
+<tr>
+<td><code>educator.test.js</code></td>
+<td>All educator portal endpoints</td>
+</tr>
+<tr>
+<td><code>student.test.js</code></td>
+<td>Student dashboard, round details, results, paper download and the full online exam over HTTP</td>
+</tr>
+</tbody>
+</table>
+<h3 id="26-end-to-end-e2e-tests-in-progress">2.6 End-to-end (E2E) tests — in progress</h3>
+<p><strong>What they are:</strong> tests that open the real portal in a real browser and complete tasks exactly as users would, with the real frontend, real backend and a real database working together.</p>
+<p><strong>Why they are used:</strong> they are the final check that the whole system works for its users. They catch problems that only appear when everything runs together: real login, file uploads, browser behaviour, page navigation and layout. Only the most important journeys are covered, because E2E tests are slower than the other levels.</p>
+<p><strong>Why Playwright</strong>
+- <strong>One install covers three browsers:</strong> Chromium, Firefox and WebKit (Safari's engine).
+- <strong>Runs in CI without a separate GUI runner:</strong> it works headless, which suits the project's Gitea Actions pipeline.
+- <strong>Built-in failure evidence:</strong> screenshots, videos and step-by-step traces.
+- <strong>Waits automatically</strong> for pages and elements, which keeps tests reliable.</p>
+<p><strong>Test environment</strong>
+- Playwright starts the frontend and backend itself before the tests run.
+- The backend uses a dedicated test database, filled with known starting data (seeded) before the run, and a separate Supabase test project. Production data and accounts are never used.
+- Each test signs in with its own test account for its role.</p>
+<p><strong>Planned user journeys</strong></p>
+<table>
+<thead>
+<tr>
+<th>Journey</th>
+<th>Role(s)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Log in and reach the correct dashboard; log out</td>
+<td>All roles</td>
+</tr>
+<tr>
+<td>Create an olympiad and a round, upload the question paper and memo</td>
+<td>Organiser</td>
+</tr>
+<tr>
+<td>Invite a school, then register as its coordinator from the invitation</td>
+<td>Organiser, educator</td>
+</tr>
+<tr>
+<td>Register learners and invite students</td>
+<td>Educator</td>
+</tr>
+<tr>
+<td>Build the exam from the question paper and submit it for review</td>
+<td>Educator</td>
+</tr>
+<tr>
+<td>Review the exam against the memo and approve it</td>
+<td>Organiser</td>
+</tr>
+<tr>
+<td>Sit the exam online: answer, flag, resume after a refresh, submit</td>
+<td>Student</td>
+</tr>
+<tr>
+<td>Submit offline results for learners</td>
+<td>Educator</td>
+</tr>
+<tr>
+<td>Mark essay answers and release results</td>
+<td>Organiser</td>
+</tr>
+<tr>
+<td>View results and download the paper</td>
+<td>Student, educator</td>
+</tr>
+<tr>
+<td>Pages remain usable at mobile width</td>
+<td>All roles</td>
+</tr>
+</tbody>
+</table>
+<p><strong>How to run (once added)</strong></p>
+<pre><code class="language-bash">cd e2e
+npm install
+npx playwright install      # downloads the browsers
+npx playwright test         # runs all E2E tests headless
+npx playwright show-report  # opens the HTML report with screenshots and traces
+</code></pre>
+<h3 id="27-how-to-run-the-tests">2.7 How to run the tests</h3>
+<p>No database, <code>.env</code> file or internet connection is needed for the unit, integration or API tests.</p>
+<p><strong>Backend</strong></p>
+<pre><code class="language-bash">cd backend
+npm install
+npm run test:unit                   # unit tests
+npm run test:integration            # integration tests
+npm run test:api                    # API tests
+npm test                            # all backend tests
+npm run test:coverage               # unit test coverage report
+npm run test:integration:coverage   # integration test coverage report
+npm run test:api:coverage           # API test coverage report
+</code></pre>
+<p><strong>Frontend</strong></p>
+<pre><code class="language-bash">cd frontend
+npm install
+npm run test:unit          # unit tests
+npm run test:integration   # integration tests
+npm test                   # all frontend tests
+npm run test:watch         # re-runs unit tests on every save
+npm run test:coverage      # unit test coverage report
+npm run typecheck:tests    # type-checks the test code
+</code></pre>
+<h3 id="28-continuous-integration-planned">2.8 Continuous integration — planned</h3>
+<p>The project already uses Gitea Actions to build and deploy the backend (Render) and the frontend (Vercel). The test suites are being added to that pipeline:</p>
+<ol>
+<li>On every push and pull request, the pipeline installs dependencies, then runs linting, a frontend build, and the backend and frontend test suites.</li>
+<li>E2E tests run on pull requests into <code>main</code>.</li>
+<li>Deployment to Render and Vercel happens only when every test passes.</li>
+<li>Coverage reports and Playwright reports are saved with each pipeline run.</li>
+</ol>
+<hr />
+<h2 id="3-test-policy">3. Test policy</h2>
+<p>These rules apply to everyone working on the project.</p>
+<h3 id="31-when-tests-must-be-written">3.1 When tests must be written</h3>
+<ol>
+<li><strong>New features</strong> include tests at the levels that fit:</li>
+<li>unit tests for new logic</li>
+<li>an integration test for new database behaviour or a new page</li>
+<li>API tests for every new or changed endpoint</li>
+<li><strong>New endpoints</strong> must be added to <code>backend/tests/api/helpers/endpoints.js</code> with the roles allowed to call them; the test run fails until this is done.</li>
+<li><strong>Every bug fix includes a test</strong> that fails before the fix and passes after it, so the bug cannot return. The bug and its fix are recorded in <a href="../bug-tracking/">bug-tracking.md</a>.</li>
+<li><strong>Changes to permissions or security</strong> (who may see or change data) always include API tests for both the allowed and the refused users.</li>
+</ol>
+<h3 id="32-before-code-is-merged">3.2 Before code is merged</h3>
+<ol>
+<li>All test suites pass, along with linting and the frontend build.</li>
+<li>No test is skipped, deleted or weakened just to make a change pass. If a test's expected behaviour changes, the reason is explained in the pull request.</li>
+<li>Coverage must not drop noticeably. Target: at least 90% of statements for unit tests.</li>
+<li>Pull requests are reviewed by another team member, including the tests.</li>
+</ol>
+<h3 id="33-how-tests-are-written">3.3 How tests are written</h3>
+<ol>
+<li><strong>Tests are independent.</strong> Each test creates its own data and never depends on another test having run first. The test database is emptied before every test.</li>
+<li><strong>No real external services in automated tests.</strong> Supabase and email are faked in unit, integration and API tests, and tests never use production data or credentials. E2E tests use separate test accounts and a test database only.</li>
+<li><strong>Test behaviour, not internal code.</strong> Frontend tests find elements by role, label or visible text, as a user would. Backend tests check responses and saved data.</li>
+<li><strong>Realistic data.</strong> Mocked API responses use exactly the backend's format, and test records are built with the shared factories.</li>
+<li><strong>Clear names.</strong> Test names describe the expected behaviour, for example "responds 403 to another organiser".</li>
+<li><strong>Test code is held to the same standard as app code.</strong> It is readable, reviewed and type-checked on the frontend.</li>
+</ol>
+<h3 id="34-handling-test-failures">3.4 Handling test failures</h3>
+<ol>
+<li>A failing test on <code>main</code> is fixed before any other work is merged.</li>
+<li>A test that fails only sometimes (a "flaky" test) is investigated and fixed rather than re-run until it passes.</li>
+<li>Failures found during testing are logged in <a href="../bug-tracking/">bug-tracking.md</a>.</li>
+</ol>
+<hr />
+<h2 id="4-user-feedback-process">4. User feedback process</h2>
+<p>Feedback from real users (organisers, educators and students) is collected in a formal way, so it is recorded, prioritised and followed through to a fix.</p>
+<h3 id="41-collecting-feedback">4.1 Collecting feedback</h3>
+<ol>
+<li><strong>User testing sessions.</strong> Before each release, representative users from each role are given set tasks. Examples: "create a round and upload its paper", "register three learners", "sit the exam and submit". Observers note where users struggle, make mistakes or ask for help.</li>
+<li><strong>Feedback form.</strong> After each session, participants complete a short form covering:</li>
+<li>how easy each task was (1–5)</li>
+<li>what was confusing</li>
+<li>what went wrong</li>
+<li>what they would change</li>
+<li><strong>Ongoing reports.</strong> Users can report problems or suggestions to the team at any time. Each report includes the role, the page, what they did, what they expected and what happened, with a screenshot where possible.</li>
+</ol>
+<h3 id="42-recording-and-triage">4.2 Recording and triage</h3>
+<ol>
+<li>Every piece of feedback is logged as an issue in the project's Gitea repository, labelled <code>bug</code>, <code>usability</code> or <code>feature request</code>.</li>
+<li>Each issue is given a priority:</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>Priority</th>
+<th>Meaning</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Critical</td>
+<td>Data is lost or exposed, or users cannot complete a core task</td>
+<td>Exam answers not saved; a user can see or change data they shouldn't</td>
+</tr>
+<tr>
+<td>High</td>
+<td>A core task works but gives wrong or confusing results</td>
+<td>Wrong totals; an action appears to fail when it succeeded</td>
+</tr>
+<tr>
+<td>Medium</td>
+<td>Inconvenient but has a workaround</td>
+<td>A field is awkward to edit</td>
+</tr>
+<tr>
+<td>Low</td>
+<td>Cosmetic or minor</td>
+<td>Wording, spacing, pluralisation</td>
+</tr>
+</tbody>
+</table>
+<ol>
+<li>Issues are reviewed at the team's weekly meeting, assigned to a team member and scheduled. Critical issues are handled immediately.</li>
+</ol>
+<h3 id="43-acting-on-feedback">4.3 Acting on feedback</h3>
+<ol>
+<li>The reported problem is reproduced. Where possible, an automated test is written that shows the problem.</li>
+<li>The fix is made, and the new test and all existing tests must pass (see the <a href="#3-test-policy">test policy</a>).</li>
+<li>The fix is recorded in <a href="../bug-tracking/">bug-tracking.md</a> and the issue is closed with a link to the change.</li>
+<li>Where the feedback came from a user, the fix is confirmed with that user or in the next user testing session.</li>
+<li>Recurring themes (for example, several users confused by the same page) are raised at the weekly meeting and turned into design improvements.</li>
+</ol>
 
 
 
@@ -1088,13 +2196,13 @@ doesn't introduce an unfamiliar testing paradigm for anyone on the team.</p>
         
         
           
-          <a href="../cicd-hosting/" class="md-footer__link md-footer__link--next" aria-label="Next: CI/CD and Hosting">
+          <a href="../bug-tracking/" class="md-footer__link md-footer__link--next" aria-label="Next: Bug Tracking">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                CI/CD and Hosting
+                Bug Tracking
               </div>
             </div>
             <div class="md-footer__button md-icon">
