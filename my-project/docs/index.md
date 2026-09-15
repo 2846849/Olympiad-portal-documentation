@@ -3,7 +3,7 @@
 **COMS3011A Project 5 — Olympiad Portal**
 **Team:** Prompt Engineers
 
-[visit the Olympiad portal site](https://frontend-nine-pink-19.vercel.app/)
+[visit the Olympiad portal site](https://olympiad-frontend-xi.vercel.app)
 
 This section of the documentation site describes the system's architecture and the
 technology choices behind it. Use the navigation on the left to jump to a specific
@@ -20,6 +20,3 @@ area:
 - **Version Control** — branching, commits, versioning
 - **Methodology** — project management approach
 
-!!! info "AI Declaration"
-    This documentation was adapted from the team's Technology Stack and Architecture
-    document, which was generated with Claude-Web (Claude Sonnet 5).

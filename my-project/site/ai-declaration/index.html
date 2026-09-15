@@ -9,10 +9,10 @@
       
       
       
-        <link rel="prev" href="../backend/">
+        <link rel="prev" href="../methodology/">
       
       
-        <link rel="next" href="../scheduling/">
+        <link rel="next" href="../ui-design/">
       
       
         
@@ -23,7 +23,7 @@
     
     
       
-        <title>Data and Storage - Olympiad-portal</title>
+        <title>AI Declaration - Olympiad-portal</title>
       
     
     
@@ -74,7 +74,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#4-data-and-storage" class="md-skip">
+        <a href="#ai-declaration" class="md-skip">
           Skip to content
         </a>
       
@@ -108,7 +108,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Data and Storage
+              AI Declaration
             
           </span>
         </div>
@@ -431,37 +431,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Data and Storage
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../data-storage/" class="md-nav__link">
         
   
   
@@ -477,59 +450,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#41-database-supabase-postgresql" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        4.1 Database — Supabase (PostgreSQL)
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#42-authentication-supabase-auth" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        4.2 Authentication — Supabase Auth
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#43-file-storage-supabase-storage" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        4.3 File Storage — Supabase Storage
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -707,10 +627,19 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../ai-declaration/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -726,6 +655,7 @@
   
 
       </a>
+      
     </li>
   
 
@@ -982,47 +912,6 @@
     
   
   
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#41-database-supabase-postgresql" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        4.1 Database — Supabase (PostgreSQL)
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#42-authentication-supabase-auth" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        4.2 Authentication — Supabase Auth
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#43-file-storage-supabase-storage" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        4.3 File Storage — Supabase Storage
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
 </nav>
                   </div>
                 </div>
@@ -1038,33 +927,9 @@
 
 
 
-<h1 id="4-data-and-storage">4. Data and Storage</h1>
-<h2 id="41-database-supabase-postgresql">4.1 Database — Supabase (PostgreSQL)</h2>
-<p>The database is PostgreSQL, hosted on Supabase. The data involved is relational in
-a substantive way — schools, educators, entrants, rounds, submissions, and marks,
-with constraints such as one submission per entrant per round — and a relational
-database enforces this correctness rather than leaving it to application code.</p>
-<p>Supabase is used strictly as <strong>managed infrastructure</strong>: Express connects to the
-underlying PostgreSQL instance directly through Prisma, and the React application
-never queries application data through Supabase's client library.</p>
-<p>!!! note "Why this distinction matters"
-    The Project Brief's Key Requirements name Supabase directly as an example of a
-    system that generates API endpoints, which may not be used in place of a
-    hand-written API. Used only as a managed database, authentication provider, and
-    object store — with all application data routed exclusively through the
-    hand-written Express API — this restriction is not expected to apply. The group
-    intends to confirm this interpretation with the course lecturer ahead of
-    Milestone 1.</p>
-<h2 id="42-authentication-supabase-auth">4.2 Authentication — Supabase Auth</h2>
-<p>Authentication is handled by Supabase Auth. The React application calls it directly
-for sign up, sign in, and password reset, and receives a JWT, which Express
-verifies on every protected request. This satisfies the requirement that
-authentication rely on an established library rather than a system written by the
-group, and is a separate concern from the data-API restriction described above.</p>
-<h2 id="43-file-storage-supabase-storage">4.3 File Storage — Supabase Storage</h2>
-<p>Papers, memos, and scanned offline submissions are stored as objects in Supabase
-Storage, accessed from Express using a service role key rather than by direct,
-unauthenticated client access.</p>
+<h1 id="ai-declaration">AI Declaration</h1>
+<p>This documentation was adapted from the team's Technology Stack and Architecture
+    document, which was generated with Claude-Web (Claude Sonnet 5).</p>
 
 
 
@@ -1100,7 +965,7 @@ unauthenticated client access.</p>
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../backend/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Backend">
+          <a href="../methodology/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Project Methodology">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
@@ -1110,20 +975,20 @@ unauthenticated client access.</p>
                 Previous
               </span>
               <div class="md-ellipsis">
-                Backend
+                Project Methodology
               </div>
             </div>
           </a>
         
         
           
-          <a href="../scheduling/" class="md-footer__link md-footer__link--next" aria-label="Next: Scheduling">
+          <a href="../ui-design/" class="md-footer__link md-footer__link--next" aria-label="Next: UI Design">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Scheduling
+                UI Design
               </div>
             </div>
             <div class="md-footer__button md-icon">

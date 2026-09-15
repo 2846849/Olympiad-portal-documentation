@@ -38,3 +38,12 @@ nav:
       - CI/CD and Hosting: cicd-hosting.md
       - Version Control: version-control.md
       - Project Methodology: methodology.md
+      - AI Declaration: ai-declaration.md
+      - UI Design: ui-design.md
+      - System Design : system-design.md
+      - RoadMap : roadmap.md 
+      - Comprehensive Dev Plan: comprehensive-dev-plan.md
+      - UML Diagrams: uml-diagrams.md
+      - APIs : api.md
+      - Third Party Code: third-party-code.md
+      - User Stories By Role: user-stories-by-role.md

@@ -1,0 +1,2105 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../ui-design/">
+      
+      
+        <link rel="next" href="../roadmap/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>System Design - Olympiad-portal</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#system-design-olympiad-portal" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Olympiad-portal" class="md-header__button md-logo" aria-label="Olympiad-portal" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Olympiad-portal
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              System Design
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href=".." class="md-tabs__link">
+          
+  
+  
+  Technology Stack and Architecture
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Olympiad-portal" class="md-nav__button md-logo" aria-label="Olympiad-portal" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Olympiad-portal
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Technology Stack and Architecture
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Technology Stack and Architecture
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../frontend/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Frontend
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../backend/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Backend
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../data-storage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data and Storage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../scheduling/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Scheduling
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../external-integration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    External Integration (EmailJS)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../testing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Testing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cicd-hosting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CI/CD and Hosting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../version-control/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Version Control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../methodology/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Project Methodology
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ai-declaration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AI Declaration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ui-design/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    UI Design
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    System Design
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    System Design
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Architecture
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Architecture">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#why-multi-tier" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why Multi-Tier
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-backend-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Backend Architecture
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Backend Architecture">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#request-lifecycle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Request Lifecycle
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#error-handling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Error Handling
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#api-routes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        API Routes
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-database-design" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Database Design
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Database Design">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#entity-relationship-diagram" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Entity-Relationship Diagram
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#models-14-total" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Models (14 total)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#enums" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Enums
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#design-decisions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Design Decisions
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-core-behaviours" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Core Behaviours
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Core Behaviours">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#authentication-flow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Authentication Flow
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#round-lifecycle-state-machine" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Round Lifecycle State Machine
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#auto-marking-pipeline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Auto-Marking Pipeline
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#submission-idempotency" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Submission Idempotency
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-security" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Security
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-backlog-feature-design-not-yet-implemented" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Backlog Feature Design (Not Yet Implemented)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. Backlog Feature Design (Not Yet Implemented)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#online-paper-sitting-sprint-2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Online Paper Sitting (Sprint 2)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#notification-system-sprint-2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Notification System (Sprint 2)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#human-marking-queue-sprint-2-3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Human Marking Queue (Sprint 2-3)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#progression-and-standings-sprint-2-3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Progression and Standings (Sprint 2-3)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#question-bank-and-variants-sprint-3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Question Bank and Variants (Sprint 3)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#appeals-pipeline-sprint-3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Appeals Pipeline (Sprint 3)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#multi-olympiad-support-sprint-3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Multi-Olympiad Support (Sprint 3)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#onlineoffline-hybrid-sprint-3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Online/Offline Hybrid (Sprint 3)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#audit-log-and-replay-sprint-3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Audit Log and Replay (Sprint 3)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-deployment-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Deployment Architecture
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../roadmap/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RoadMap
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../comprehensive-dev-plan/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Comprehensive Dev Plan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../uml-diagrams/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    UML Diagrams
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    APIs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../third-party-code/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Third Party Code
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../user-stories-by-role/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    User Stories By Role
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Architecture
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Architecture">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#why-multi-tier" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why Multi-Tier
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-backend-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Backend Architecture
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Backend Architecture">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#request-lifecycle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Request Lifecycle
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#error-handling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Error Handling
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#api-routes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        API Routes
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-database-design" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Database Design
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Database Design">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#entity-relationship-diagram" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Entity-Relationship Diagram
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#models-14-total" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Models (14 total)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#enums" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Enums
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#design-decisions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Design Decisions
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-core-behaviours" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Core Behaviours
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Core Behaviours">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#authentication-flow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Authentication Flow
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#round-lifecycle-state-machine" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Round Lifecycle State Machine
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#auto-marking-pipeline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Auto-Marking Pipeline
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#submission-idempotency" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Submission Idempotency
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-security" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Security
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-backlog-feature-design-not-yet-implemented" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Backlog Feature Design (Not Yet Implemented)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. Backlog Feature Design (Not Yet Implemented)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#online-paper-sitting-sprint-2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Online Paper Sitting (Sprint 2)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#notification-system-sprint-2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Notification System (Sprint 2)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#human-marking-queue-sprint-2-3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Human Marking Queue (Sprint 2-3)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#progression-and-standings-sprint-2-3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Progression and Standings (Sprint 2-3)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#question-bank-and-variants-sprint-3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Question Bank and Variants (Sprint 3)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#appeals-pipeline-sprint-3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Appeals Pipeline (Sprint 3)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#multi-olympiad-support-sprint-3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Multi-Olympiad Support (Sprint 3)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#onlineoffline-hybrid-sprint-3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Online/Offline Hybrid (Sprint 3)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#audit-log-and-replay-sprint-3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Audit Log and Replay (Sprint 3)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-deployment-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Deployment Architecture
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="system-design-olympiad-portal">System Design — Olympiad Portal</h1>
+<blockquote>
+<p><strong>Team:</strong> Prompt Engineers
+<strong>Version:</strong> 1.0
+<strong>Last updated:</strong> September 2026</p>
+</blockquote>
+<hr />
+<h2 id="1-architecture">1. Architecture</h2>
+<p>The Olympiad Portal uses a <strong>multi-tier architecture</strong> with three tiers deployed on separate managed services:</p>
+<pre><code>CLIENT TIER                    APPLICATION TIER               DATA TIER
+React SPA (Vercel CDN)   ---&gt;  Express API (Render)   ---&gt;   PostgreSQL (Supabase)
+Role-based dashboards          Routes &gt; Controllers          Prisma ORM
+React Router, React Query      &gt; Services &gt; Prisma           Supabase Auth
+                               Helmet, CORS, WebSocket       Supabase Storage
+</code></pre>
+<h3 id="why-multi-tier">Why Multi-Tier</h3>
+<ul>
+<li><strong>Separation of concerns:</strong> Each tier handles one responsibility (presentation, business logic, data storage)</li>
+<li><strong>Independent scaling:</strong> Frontend serves from CDN; backend scales horizontally on Render; database scales vertically on Supabase</li>
+<li><strong>Security boundaries:</strong> The client never accesses the database directly; all data flows through the API tier which enforces authentication and authorisation</li>
+</ul>
+<p>For the rationale behind each individual technology choice, see <a href="../architecture/">Architecture</a>, <a href="../frontend/">Frontend</a>, <a href="../backend/">Backend</a>, and <a href="../data-storage/">Data and Storage</a>.</p>
+<hr />
+<h2 id="2-backend-architecture">2. Backend Architecture</h2>
+<h3 id="request-lifecycle">Request Lifecycle</h3>
+<pre><code>HTTP Request
+  &gt; Helmet (security headers)
+  &gt; CORS (origin validation)
+  &gt; Body parsing (JSON / URL-encoded)
+  &gt; Route matching
+  &gt; requireAuth middleware (validates Supabase JWT)
+  &gt; requireRole middleware (checks role: organiser/educator/student)
+  &gt; express-validator middleware (validates request body/params)
+  &gt; Controller (HTTP concerns)
+  &gt; Service (business logic)
+  &gt; Prisma ORM (database queries)
+  &gt; JSON Response
+  &gt; errorHandler (catches all errors, maps to HTTP status codes)
+</code></pre>
+<h3 id="error-handling">Error Handling</h3>
+<p>Custom error hierarchy maps to HTTP status codes:</p>
+<table>
+<thead>
+<tr>
+<th>Error Class</th>
+<th>Status</th>
+<th>Use case</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BadRequest</td>
+<td>400</td>
+<td>Invalid input</td>
+</tr>
+<tr>
+<td>Unauthorized</td>
+<td>401</td>
+<td>Missing or expired JWT</td>
+</tr>
+<tr>
+<td>Forbidden</td>
+<td>403</td>
+<td>Insufficient role</td>
+</tr>
+<tr>
+<td>NotFound</td>
+<td>404</td>
+<td>Resource does not exist</td>
+</tr>
+<tr>
+<td>Conflict</td>
+<td>409</td>
+<td>Unique constraint violation (Prisma P2002)</td>
+</tr>
+<tr>
+<td>ValidationError</td>
+<td>422</td>
+<td>Failed express-validator rules</td>
+</tr>
+</tbody>
+</table>
+<p>All errors return <code>{ success: false, error: "message" }</code>. Stack traces are suppressed in production.</p>
+<h3 id="api-routes">API Routes</h3>
+<p>Routes are grouped by resource: auth/registration, olympiads, rounds, notification rules, questions, exam approval, papers, submissions, marking, and the student portal/exam-sitting flow. Access is restricted by role (public, any authenticated user, organiser, or educator) via the <code>requireAuth</code>/<code>requireRole</code> middleware described above.</p>
+<p>The full, current list of endpoints with request/response shapes lives in one place to avoid drift: see the <a href="../api/">API Reference</a>.</p>
+<hr />
+<h2 id="3-database-design">3. Database Design</h2>
+<h3 id="entity-relationship-diagram">Entity-Relationship Diagram</h3>
+<pre><code>users ─────┬──── invitations
+           ├──── olympiads ────── rounds ────┬──── papers ────── questions
+           │              │                  │                     │
+           │              │                  ├──── submissions ──── answers
+           │              │                  │
+           │              │                  └──── results
+           │              │
+           │              └──── school_registrations ──── schools ────┬──── educators
+           │                                                          │
+           └──── entrants ───── entrant_registrations ────────────────┘
+</code></pre>
+<h3 id="models-14-total">Models (14 total)</h3>
+<table>
+<thead>
+<tr>
+<th>Model</th>
+<th>Key Fields</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>users</td>
+<td>id, email, full_name, role, auth_provider_id</td>
+<td>Core user accounts (organiser, educator, student)</td>
+</tr>
+<tr>
+<td>invitations</td>
+<td>code, type, olympiad_id, school_id, expires_at</td>
+<td>Invitation-based registration with expiry</td>
+</tr>
+<tr>
+<td>schools</td>
+<td>name, address</td>
+<td>School records</td>
+</tr>
+<tr>
+<td>educators</td>
+<td>user_id, school_id</td>
+<td>Links users to schools</td>
+</tr>
+<tr>
+<td>entrants</td>
+<td>user_id, school_id, full_name, grade</td>
+<td>Student participants</td>
+</tr>
+<tr>
+<td>olympiads</td>
+<td>name, organiser_id, timezone</td>
+<td>Competition events</td>
+</tr>
+<tr>
+<td>school_registrations</td>
+<td>school_id, olympiad_id</td>
+<td>Many-to-many: schools to olympiads</td>
+</tr>
+<tr>
+<td>rounds</td>
+<td>olympiad_id, name, opens_at, closes_at, state, qualifying_threshold</td>
+<td>Competition rounds with lifecycle state</td>
+</tr>
+<tr>
+<td>papers</td>
+<td>round_id, file_url, memo_file_url, is_archived</td>
+<td>Question papers and memos</td>
+</tr>
+<tr>
+<td>questions</td>
+<td>paper_id, type, prompt, options, correct_option, max_points</td>
+<td>Individual questions (mcq, short_answer, essay)</td>
+</tr>
+<tr>
+<td>answers</td>
+<td>submission_id, question_id, answer_value, is_correct, points_awarded</td>
+<td>Student answers with marking data</td>
+</tr>
+<tr>
+<td>submissions</td>
+<td>round_id, entrant_id, route, status, idempotency_key</td>
+<td>Submission tracking (online/offline)</td>
+</tr>
+<tr>
+<td>entrant_registrations</td>
+<td>entrant_id, round_id, registered_by</td>
+<td>Which entrants are in which rounds</td>
+</tr>
+<tr>
+<td>results</td>
+<td>round_id, entrant_id, total_points, rank, qualified</td>
+<td>Final scores and rankings</td>
+</tr>
+</tbody>
+</table>
+<h3 id="enums">Enums</h3>
+<table>
+<thead>
+<tr>
+<th>Enum</th>
+<th>Values</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>user_role</td>
+<td>organiser, educator, student</td>
+</tr>
+<tr>
+<td>invite_type</td>
+<td>school, educator, student</td>
+</tr>
+<tr>
+<td>round_state</td>
+<td>scheduled, open, closed, marking, results_released</td>
+</tr>
+<tr>
+<td>submission_route</td>
+<td>online, offline</td>
+</tr>
+<tr>
+<td>submission_status</td>
+<td>received, automarked, queued_for_marking, marked, moderated</td>
+</tr>
+</tbody>
+</table>
+<h3 id="design-decisions">Design Decisions</h3>
+<ul>
+<li><strong>UUIDs</strong> for all primary keys — prevents enumeration, safe in URLs</li>
+<li><strong>Soft delete</strong> on users (deleted_at column) — preserves referential integrity</li>
+<li><strong>timestamptz(6)</strong> on all timestamps — timezone-aware precision for deadlines</li>
+<li><strong>Composite unique constraints</strong> — submissions(round_id, entrant_id, route) prevents duplicates; entrant_registrations(entrant_id, round_id) prevents double registration</li>
+<li><strong>Indexes</strong> — rounds(state, opens_at, closes_at) for lifecycle queries; results(round_id, rank) for leaderboards</li>
+<li><strong>Idempotency key</strong> on submissions — prevents double-submission on network retries</li>
+</ul>
+<hr />
+<h2 id="4-core-behaviours">4. Core Behaviours</h2>
+<h3 id="authentication-flow">Authentication Flow</h3>
+<ol>
+<li><strong>Organiser self-registration:</strong> POST /auth/register/organiser with organiser_secret environment variable, creates Supabase Auth user and users row with role=organiser</li>
+<li><strong>School invitation:</strong> Organiser creates school, generates SCH-XXXX-XXXX code, emails school contact</li>
+<li><strong>Educator registration:</strong> Educator visits /signup, enters code, verifies school details, creates account linked to school</li>
+<li><strong>Student registration:</strong> Educator bulk-generates codes, each maps to an entrant record, student signs up with code</li>
+</ol>
+<p>All API requests include <code>Authorization: Bearer &lt;access_token&gt;</code>. The requireAuth middleware validates the JWT via Supabase. The requireRole middleware checks user.role.</p>
+<h3 id="round-lifecycle-state-machine">Round Lifecycle State Machine</h3>
+<pre><code>scheduled  &gt;  open  &gt;  closed  &gt;  marking  &gt;  results_released
+</code></pre>
+<ul>
+<li><strong>scheduled:</strong> Round created, opens_at is in the future. No access to papers.</li>
+<li><strong>open:</strong> opens_at reached. Papers downloadable, submissions accepted, online sitting available.</li>
+<li><strong>closed:</strong> closes_at reached. No more submissions. Papers locked.</li>
+<li><strong>marking:</strong> Organiser triggers auto-mark. MCQ scored automatically; non-MCQ queued for human marking.</li>
+<li><strong>results_released:</strong> Scores visible. Papers auto-archived. Qualified entrants identified.</li>
+</ul>
+<p>Transitions from scheduled to open and open to closed are automatic, driven by a lifecycle service that queries rounds where the current time has passed the configured threshold.</p>
+<h3 id="auto-marking-pipeline">Auto-Marking Pipeline</h3>
+<ol>
+<li>Fetch all submissions with status=received for the round</li>
+<li>For each submission, iterate over answers</li>
+<li>MCQ answers: compare answer_value to correct_option, award max_points or 0</li>
+<li>Non-MCQ answers: set submission status to queued_for_marking for human review</li>
+<li>Update submission status to automarked or queued_for_marking</li>
+</ol>
+<h3 id="submission-idempotency">Submission Idempotency</h3>
+<p>The composite unique constraint on (round_id, entrant_id, route) plus a unique idempotency_key ensures each submission is counted exactly once, even if the request is retried due to network issues.</p>
+<hr />
+<h2 id="5-security">5. Security</h2>
+<table>
+<thead>
+<tr>
+<th>Area</th>
+<th>Implementation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Passwords</td>
+<td>Min 8 chars, uppercase letter, number required</td>
+</tr>
+<tr>
+<td>JWT</td>
+<td>Managed by Supabase Auth; access tokens expire after 1 hour</td>
+</tr>
+<tr>
+<td>HTTP headers</td>
+<td>Helmet sets CSP, HSTS, X-Content-Type-Options, X-Frame-Options</td>
+</tr>
+<tr>
+<td>CORS</td>
+<td>Restricted to frontend domain (Vercel URL in production)</td>
+</tr>
+<tr>
+<td>Input validation</td>
+<td>express-validator on all routes with sanitisation</td>
+</tr>
+<tr>
+<td>SQL injection</td>
+<td>Prevented by Prisma parameterised queries</td>
+</tr>
+<tr>
+<td>File upload</td>
+<td>Multer with size limits; PDF only for papers/memos</td>
+</tr>
+<tr>
+<td>Enumeration</td>
+<td>UUIDs prevent sequential ID guessing</td>
+</tr>
+<tr>
+<td>Access control</td>
+<td>requireRole on every protected route</td>
+</tr>
+<tr>
+<td>Time-gating</td>
+<td>Papers locked before opens_at; submissions blocked after closes_at</td>
+</tr>
+<tr>
+<td>Results embargo</td>
+<td>Scores only visible when round state is results_released</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="6-backlog-feature-design-not-yet-implemented">6. Backlog Feature Design (Not Yet Implemented)</h2>
+<h3 id="online-paper-sitting-sprint-2">Online Paper Sitting (Sprint 2)</h3>
+<p>Students sit papers in the browser with a server-authoritative timer. The remaining time is calculated from round.closes_at minus submission.received_at on the server, not a client-side countdown. This prevents timer manipulation via page refresh.</p>
+<p>Answers are auto-saved on each change via debounced PATCH requests. On reconnection after a dropped connection, the frontend fetches the submission, pre-fills saved answers, and resumes the server-calculated timer.</p>
+<p>The interface includes a question navigator showing answered, unanswered, and flagged questions, with Previous/Next navigation and a flag-for-review toggle.</p>
+<h3 id="notification-system-sprint-2">Notification System (Sprint 2)</h3>
+<p>Organisers configure notification rules with three components: trigger (e.g., "round opens in 24h"), recipient (e.g., "all registered educators"), and channel (email). A scheduler checks upcoming events against configured rules and dispatches notifications.</p>
+<p>Rules can be dry-run tested against a past round before activation.</p>
+<h3 id="human-marking-queue-sprint-2-3">Human Marking Queue (Sprint 2-3)</h3>
+<p>Non-MCQ answers are queued with status=queued_for_marking. Markers see a queue sorted by round and question, award partial credit (0 to max_points), and progress through the queue. Moderators sample a percentage of each marker's work for consistency review.</p>
+<h3 id="progression-and-standings-sprint-2-3">Progression and Standings (Sprint 2-3)</h3>
+<p>After results are generated, entrants whose total_points meet the qualifying_threshold are automatically registered for the next round (no manual re-registration). Standings are published at both individual and school level.</p>
+<h3 id="question-bank-and-variants-sprint-3">Question Bank and Variants (Sprint 3)</h3>
+<p>A central question repository tagged by subject, difficulty, topic, and type. Papers can be generated from the bank with balanced difficulty. Variants give different entrants different question orders or equivalent questions, and marking uses each entrant's specific variant key.</p>
+<p>Question difficulty is derived from actual performance data: difficulty = 1 - (average score / max points).</p>
+<h3 id="appeals-pipeline-sprint-3">Appeals Pipeline (Sprint 3)</h3>
+<p>Students request a remark, which creates an appeal assigned to a reviewer. If upheld, marks are adjusted, results recalculated, ranks recomputed, and qualification status rechecked automatically.</p>
+<h3 id="multi-olympiad-support-sprint-3">Multi-Olympiad Support (Sprint 3)</h3>
+<p>A single organiser account manages multiple concurrent olympiads, each with its own timezone setting. The authoritative clock for deadline enforcement uses the olympiad's timezone. All olympiads share a single archive of past papers.</p>
+<h3 id="onlineoffline-hybrid-sprint-3">Online/Offline Hybrid (Sprint 3)</h3>
+<p>The same paper is available both online (browser sitting) and offline (downloaded PDF administered on paper). Offline results are uploaded by the educator. Both routes merge into a single result set per entrant. If an entrant appears via both routes, the system flags it for organiser review.</p>
+<h3 id="audit-log-and-replay-sprint-3">Audit Log and Replay (Sprint 3)</h3>
+<p>Every automatic action (round transitions, auto-marking, progression, notifications) is logged with timestamp, action type, actor, and details. Given a round_id, the full event history can be replayed for dispute investigation.</p>
+<hr />
+<h2 id="7-deployment-architecture">7. Deployment Architecture</h2>
+<pre><code>Internet
+  |
+  +---&gt; Vercel CDN ---&gt; React SPA (static assets, auto-deploy from GitHub)
+  |
+  +---&gt; Render    ---&gt; Express API (Node.js, auto-deploy from GitHub)
+              |
+              +---&gt; Supabase ---&gt; PostgreSQL + Auth + Storage
+</code></pre>
+<p>Environment variables are managed per environment:</p>
+<ul>
+<li>Backend: DATABASE_URL, SUPABASE_URL, SUPABASE_SERVICE_KEY, ORGANISER_SECRET, FRONTEND_URL</li>
+<li>Frontend: VITE_SUPABASE_URL, VITE_SUPABASE_ANON_KEY</li>
+</ul>
+<p>For why these specific hosting providers were chosen, see <a href="../cicd-hosting/">CI/CD and Hosting</a>.</p>
+<hr />
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../ui-design/" class="md-footer__link md-footer__link--prev" aria-label="Previous: UI Design">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                UI Design
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../roadmap/" class="md-footer__link md-footer__link--next" aria-label="Next: RoadMap">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                RoadMap
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.instant", "navigation.instant.progress", "navigation.tracking", "navigation.tabs", "navigation.sections", "navigation.top", "navigation.footer", "search.suggest", "search.highlight", "content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>
