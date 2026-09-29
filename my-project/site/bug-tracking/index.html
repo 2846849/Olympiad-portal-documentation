@@ -1,0 +1,1948 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../testing/">
+      
+      
+        <link rel="next" href="../cicd-hosting/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Bug Tracking - Olympiad-portal</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#olympiad-portal-bug-tracking" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Olympiad-portal" class="md-header__button md-logo" aria-label="Olympiad-portal" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Olympiad-portal
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Bug Tracking
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href=".." class="md-tabs__link">
+          
+  
+  
+  Technology Stack and Architecture
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Olympiad-portal" class="md-nav__button md-logo" aria-label="Olympiad-portal" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Olympiad-portal
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Technology Stack and Architecture
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Technology Stack and Architecture
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../frontend/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Frontend
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../backend/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Backend
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../data-storage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data and Storage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../scheduling/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Scheduling
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../external-integration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    External Integration (EmailJS)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../testing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Testing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bug Tracking
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bug Tracking
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#how-bugs-are-recorded" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How bugs are recorded
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#security-and-data-protection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Security and data protection
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#authentication-and-registration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Authentication and registration
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exams-and-exam-sitting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exams and exam sitting
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#submissions-results-and-registration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Submissions, results and registration
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rounds-olympiads-and-schools" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rounds, olympiads and schools
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#notifications" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Notifications
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#error-handling-and-validation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Error handling and validation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deployment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Deployment
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reporting-a-new-bug" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reporting a new bug
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cicd-hosting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CI/CD and Hosting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../version-control/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Version Control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../methodology/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Project Methodology
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ui-design/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    UI Design
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../system-design/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    System Design
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../roadmap/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RoadMap
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../comprehensive-dev-plan/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Comprehensive Dev Plan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../uml-diagrams.pdf" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    UML Diagrams
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    APIs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../third-party-code/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Third Party Code
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../user-stories-by-role/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    User Stories By Role
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ai-declaration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AI Declaration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#how-bugs-are-recorded" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How bugs are recorded
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#security-and-data-protection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Security and data protection
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#authentication-and-registration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Authentication and registration
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exams-and-exam-sitting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exams and exam sitting
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#submissions-results-and-registration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Submissions, results and registration
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rounds-olympiads-and-schools" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rounds, olympiads and schools
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#notifications" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Notifications
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#error-handling-and-validation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Error handling and validation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deployment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Deployment
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reporting-a-new-bug" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reporting a new bug
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="olympiad-portal-bug-tracking">Olympiad Portal — Bug Tracking</h1>
+<p>This log records the bugs found in the Olympiad Portal and how each one was fixed. Bugs were found through automated testing (unit, integration and API tests), during deployment, and through use of the portal.</p>
+<p>Every bug fixed in the application code has an automated test that reproduces it, so it cannot return unnoticed. See the <a href="../testing/#3-test-policy">test policy</a>.</p>
+<h2 id="how-bugs-are-recorded">How bugs are recorded</h2>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>ID</strong></td>
+<td>Unique reference (BUG-001, BUG-002, …)</td>
+</tr>
+<tr>
+<td><strong>Area</strong></td>
+<td>The part of the system affected</td>
+</tr>
+<tr>
+<td><strong>Priority</strong></td>
+<td>Critical, High, Medium or Low (see <a href="../testing/#42-recording-and-triage">priority levels</a>)</td>
+</tr>
+<tr>
+<td><strong>Found by</strong></td>
+<td>Unit tests, integration tests, API tests, deployment, or user feedback</td>
+</tr>
+<tr>
+<td><strong>Bug</strong></td>
+<td>What went wrong</td>
+</tr>
+<tr>
+<td><strong>Fix</strong></td>
+<td>What was changed to fix it</td>
+</tr>
+<tr>
+<td><strong>Status</strong></td>
+<td>Fixed, or open with the reason</td>
+</tr>
+</tbody>
+</table>
+<h2 id="summary">Summary</h2>
+<table>
+<thead>
+<tr>
+<th>Priority</th>
+<th>Count</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Critical</td>
+<td>5</td>
+</tr>
+<tr>
+<td>High</td>
+<td>17</td>
+</tr>
+<tr>
+<td>Medium</td>
+<td>15</td>
+</tr>
+<tr>
+<td>Low</td>
+<td>6</td>
+</tr>
+<tr>
+<td><strong>Total</strong></td>
+<td><strong>43</strong> (all fixed)</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="security-and-data-protection">Security and data protection</h2>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Area</th>
+<th>Priority</th>
+<th>Found by</th>
+<th>Bug</th>
+<th>Fix</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BUG-001</td>
+<td>Marking</td>
+<td>Critical</td>
+<td>API tests</td>
+<td>Any organiser, or an educator from any school, could change the marks on any answer in any round. The endpoint checked the user's role but not whether they owned the round or the learner.</td>
+<td>Marking checks that the user is the organiser who owns the round, or an educator marking a learner from their own school. An answer from a different round is reported as not found.</td>
+<td>Fixed</td>
+</tr>
+<tr>
+<td>BUG-002</td>
+<td>Invitations</td>
+<td>Critical</td>
+<td>API tests</td>
+<td>An educator who had been removed from their school could still create student invitation codes.</td>
+<td>Creating student codes needs an active school membership, the same as every other invitation endpoint.</td>
+<td>Fixed</td>
+</tr>
+<tr>
+<td>BUG-003</td>
+<td>Invitations</td>
+<td>High</td>
+<td>API tests</td>
+<td>The public endpoints for checking invitation codes and registering had no limit on repeated requests, so short invitation codes could be guessed by trying many in a row.</td>
+<td>Rate limiting added to the public authentication endpoints: 100 requests per 15 minutes per IP address, adjustable with <code>AUTH_RATE_LIMIT_MAX</code>. The app trusts the hosting proxy, so each user is counted by their own address.</td>
+<td>Fixed</td>
+</tr>
+<tr>
+<td>BUG-004</td>
+<td>Error handling</td>
+<td>High</td>
+<td>API tests</td>
+<td>An ID that wasn't a valid UUID (for example <code>/olympiads/abc</code>) caused a server error (500) whose message exposed internal database details and server file paths.</td>
+<td>Invalid IDs return 400 "Invalid ID format" with no internal details.</td>
+<td>Fixed</td>
+</tr>
+<tr>
+<td>BUG-005</td>
+<td>Student papers</td>
+<td>High</td>
+<td>Use of the portal</td>
+<td>The student "Download paper" button opened the paper's raw storage path, which doesn't work for private files and exposed where files are stored.</td>
+<td>A student endpoint returns a short-lived signed download link for rounds the student is registered for, once the round has opened. Storage paths are no longer sent to students.</td>
+<td>Fixed</td>
+</tr>
+<tr>
+<td>BUG-006</td>
+<td>Invitations</td>
+<td>Low</td>
+<td>API tests</td>
+<td>Invitation responses included the stored hash of the invitation link's secret token.</td>
+<td>The token hash is removed from responses.</td>
+<td>Fixed</td>
+</tr>
+<tr>
+<td>BUG-007</td>
+<td>Logout</td>
+<td>High</td>
+<td>Use of the portal</td>
+<td>"Log out" only returned to the login page. The login token, cached student profile and cached data stayed in the browser, so the next person on a shared computer could see the previous user's name and data.</td>
+<td>Logging out clears the login token, the cached profile, cached page data and saved exam progress, and ends the Supabase session.</td>
+<td>Fixed</td>
+</tr>
+</tbody>
+</table>
+<h2 id="authentication-and-registration">Authentication and registration</h2>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Area</th>
+<th>Priority</th>
+<th>Found by</th>
+<th>Bug</th>
+<th>Fix</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BUG-008</td>
+<td>Sign-up</td>
+<td>Critical</td>
+<td>API tests</td>
+<td>Sign-up rewrote some email addresses. For example, <code>first.last+olympiad@gmail.com</code> was saved as <code>firstlast@gmail.com</code>, so the user could not log in with the address they typed. The same rewriting stopped invitations matching the invited address.</td>
+<td>The email check only trims spaces and converts to lowercase; the address is otherwise kept exactly as typed.</td>
+<td>Fixed</td>
+</tr>
+</tbody>
+</table>
+<h2 id="exams-and-exam-sitting">Exams and exam sitting</h2>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Area</th>
+<th>Priority</th>
+<th>Found by</th>
+<th>Bug</th>
+<th>Fix</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BUG-009</td>
+<td>Exam sitting</td>
+<td>Critical</td>
+<td>Integration tests</td>
+<td>Answers could be lost. Autosave used one shared timer, so answering the next question within 0.8 seconds cancelled the save of the previous answer. That answer was also not marked as unsaved, so refreshing the page lost it.</td>
+<td>Each question has its own save timer. Answers are marked as unsaved until the server confirms them, so they are restored from the device after a refresh.</td>
+<td>Fixed</td>
+</tr>
+<tr>
+<td>BUG-010</td>
+<td>Exam sitting</td>
+<td>Critical</td>
+<td>Integration tests</td>
+<td>A student who had started but not submitted an online exam was shown as "submitted" on their dashboard and round page, with no way to return to the exam.</td>
+<td>An online exam that has been started but not submitted no longer counts as submitted, so "Sit exam online" stays available to resume it.</td>
+<td>Fixed</td>
+</tr>
+<tr>
+<td>BUG-011</td>
+<td>Exam sitting</td>
+<td>Medium</td>
+<td>Integration tests</td>
+<td>The exam timer showed "NaN:NaN:NaN" for a moment while the exam loaded.</td>
+<td>The timer stays blank until the exam's closing time is known.</td>
+<td>Fixed</td>
+</tr>
+<tr>
+<td>BUG-012</td>
+<td>Exam sitting</td>
+<td>High</td>
+<td>API tests</td>
+<td>A learner could end up with two sets of results for one round: one captured on paper by their school and one from sitting the exam online.</td>
+<td>A learner with an online sitting can't also be captured offline, and a learner whose results were captured on paper can't start the online exam (409 in both cases).</td>
+<td>Fixed</td>
+</tr>
+<tr>
+<td>BUG-013</td>
+<td>Marking</td>
+<td>Medium</td>
+<td>Unit tests</td>
+<td>Selecting the same multiple-choice option more than once could count it more than once when scoring.</td>
+<td>Duplicate selections are ignored when scoring.</td>
+<td>Fixed</td>
+</tr>
+<tr>
+<td>BUG-014</td>
+<td>Question builder</td>
+<td>High</td>
+<td>Unit tests</td>
+<td>When a multiple-choice option was left blank, the options after it shifted up on save, but the answer key did not. The saved correct answer then pointed at the wrong option.</td>
+<td>The correct-answer positions are renumbered to skip blank options before saving.</td>
+<td>Fixed</td>
+</tr>
+<tr>
+<td>BUG-015</td>
+<td>Exam totals</td>
+<td>High</td>
+<td>Integration tests</td>
+<td>Exam point totals on the exam builder and exam review pages were joined as text instead of added, for example "2" + "3" showed as "23". The database sends points as text.</td>
+<td>Points are converted to numbers before they are added.</td>
+<td>Fixed</td>
+</tr>
+<tr>
+<td>BUG-016</td>
+<td>Exam display</td>
+<td>Low</td>
+<td>Integration tests</td>
+<td>A question worth one point showed "1 pts".</td>
+<td>Points are converted to numbers before choosing "pt" or "pts".</td>
+<td>Fixed</td>
+</tr>
+<tr>
+<td>BUG-017</td>
+<td>Question builder</td>
+<td>Medium</td>
+<td>Integration tests</td>
+<td>Editing a question and saving without changing its points sent the points to the server as text.</td>
+<td>Points are sent as a number.</td>
+<td>Fixed</td>
+</tr>
+<tr>
+<td>BUG-018</td>
+<td>Question builder</td>
+<td>Medium</td>
+<td>Integration tests</td>
+<td>The points and negative marking fields couldn't be cleared: clearing them put the value straight back, so typing "4" produced "14".</td>
+<td>The fields can be emptied while typing. An empty field returns to its default when the user leaves it, and invalid values show a message and disable saving. The same fix was applied to the marking queue's points field.</td>
+<td>Fixed</td>
+</tr>
+<tr>
+<td>BUG-019</td>
+<td>Questions</td>
+<td>Low</td>
+<td>API tests</td>
+<td>Questions could be edited or deleted through the address of a different round than the one they belong to.</td>
+<td>A question that doesn't belong to the round in the address is reported as not found.</td>
+<td>Fixed</td>
+</tr>
+<tr>
+<td>BUG-020</td>
+<td>Paper viewer</td>
+<td>High</td>
+<td>Unit tests</td>
+<td>The side-by-side paper and memo viewer crashed with "is not a function", because a shared access-check function it used was never exported.</td>
+<td>The function is exported, with a test confirming it stays available.</td>
+<td>Fixed</td>
+</tr>
+</tbody>
+</table>
+<h2 id="submissions-results-and-registration">Submissions, results and registration</h2>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Area</th>
+<th>Priority</th>
+<th>Found by</th>
+<th>Bug</th>
+<th>Fix</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BUG-021</td>
+<td>Offline results</td>
+<td>High</td>
+<td>API tests</td>
+<td>After submitting results for one learner, the round page hid the submission form, so an educator could only submit results for one learner per round.</td>
+<td>The round page lists every submission for the school's learners in that round. The form stays open, only offers learners who don't have results yet, and shows a message once everyone is done.</td>
+<td>Fixed</td>
+</tr>
+<tr>
+<td>BUG-022</td>
+<td>Offline results</td>
+<td>High</td>
+<td>API tests</td>
+<td>The same learner's results could be submitted twice by leaving out the <code>route</code> field on one request and including it on another.</td>
+<td>The default route is applied before checking for duplicates, so both requests are recognised as the same submission.</td>
+<td>Fixed</td>
+</tr>
+<tr>
+<td>BUG-023</td>
+<td>Offline results</td>
+<td>High</td>
+<td>API tests</td>
+<td>Results could be submitted for a learner who wasn't registered for the round.</td>
+<td>Results can only be submitted for learners registered for the round (403 otherwise).</td>
+<td>Fixed</td>
+</tr>
+<tr>
+<td>BUG-024</td>
+<td>Offline results</td>
+<td>Medium</td>
+<td>API tests</td>
+<td>A submission with no answers was reported as "auto-marked", so the educator's receipt showed "(auto-marked)" even though nothing was marked.</td>
+<td>A submission with no answers is not reported as auto-marked.</td>
+<td>Fixed</td>
+</tr>
+<tr>
+<td>BUG-025</td>
+<td>Submissions</td>
+<td>Low</td>
+<td>API tests</td>
+<td>A submission could be viewed through the address of a different round than the one it belongs to.</td>
+<td>A submission that doesn't belong to the round in the address is reported as not found.</td>
+<td>Fixed</td>
+</tr>
+<tr>
+<td>BUG-026</td>
+<td>Learner registration</td>
+<td>High</td>
+<td>API tests</td>
+<td>Learners could be registered for rounds that had already closed, been marked or released their results.</td>
+<td>Registration is only accepted while a round is scheduled or open. Registering for a whole olympiad skips closed rounds, and returns an error if every round has closed. The Entrants page shows which rounds the learner was registered for.</td>
+<td>Fixed</td>
+</tr>
+<tr>
+<td>BUG-027</td>
+<td>Learner registration</td>
+<td>Medium</td>
+<td>API tests</td>
+<td>The list of registered learners for a round returned an empty list for a round that didn't exist, or for a school not taking part, instead of an error.</td>
+<td>The list returns 404 for an unknown round and 403 for a school not registered for the olympiad, like the other educator endpoints.</td>
+<td>Fixed</td>
+</tr>
+<tr>
+<td>BUG-028</td>
+<td>Results</td>
+<td>Medium</td>
+<td>Integration and API tests</td>
+<td>The educator round page showed results as available, and requested them, while the round was still being marked; the server rejects that request.</td>
+<td>Results are shown as available, and requested, only after they are released.</td>
+<td>Fixed</td>
+</tr>
+</tbody>
+</table>
+<h2 id="rounds-olympiads-and-schools">Rounds, olympiads and schools</h2>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Area</th>
+<th>Priority</th>
+<th>Found by</th>
+<th>Bug</th>
+<th>Fix</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BUG-029</td>
+<td>Rounds</td>
+<td>High</td>
+<td>Integration tests</td>
+<td>Deleting a scheduled round that had a question paper or registered learners failed with a database error.</td>
+<td>The round's paper, questions and registrations are deleted together with the round in a single transaction.</td>
+<td>Fixed</td>
+</tr>
+<tr>
+<td>BUG-030</td>
+<td>Rounds</td>
+<td>Medium</td>
+<td>API tests</td>
+<td>Editing a round with a non-numeric qualifying threshold caused a server error (500).</td>
+<td>The threshold is validated when a round is edited, the same as when it is created (422 with a clear message).</td>
+<td>Fixed</td>
+</tr>
+<tr>
+<td>BUG-031</td>
+<td>Schools page</td>
+<td>High</td>
+<td>Integration tests</td>
+<td>The organiser's Schools page read fields the server doesn't send. It showed "Invalid Date" and zero educators and learners for every school.</td>
+<td>The page uses the server's actual data: educator count and names, learner count, contact email, and invitation status (Pending, Accepted or Expired).</td>
+<td>Fixed</td>
+</tr>
+<tr>
+<td>BUG-032</td>
+<td>Olympiads page</td>
+<td>Medium</td>
+<td>Integration tests</td>
+<td>The Olympiads page passed the wrong settings to the page layout, so the sidebar didn't show the signed-in role correctly. Its Rounds column always showed 0.</td>
+<td>The page passes the correct layout settings and reads the round count the server sends.</td>
+<td>Fixed</td>
+</tr>
+</tbody>
+</table>
+<h2 id="notifications">Notifications</h2>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Area</th>
+<th>Priority</th>
+<th>Found by</th>
+<th>Bug</th>
+<th>Fix</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BUG-033</td>
+<td>Announcement rules</td>
+<td>Medium</td>
+<td>Integration tests</td>
+<td>Saving a new announcement rule showed an error message even though the rule had been saved.</td>
+<td>The form is cleared using a saved reference to the form, which remains valid after the save finishes.</td>
+<td>Fixed</td>
+</tr>
+<tr>
+<td>BUG-034</td>
+<td>Announcement rules</td>
+<td>Medium</td>
+<td>API tests</td>
+<td>Creating a rule without a trigger or recipient caused a server error (500) that exposed internal database details.</td>
+<td>Trigger and recipient are required when creating a rule (400 with a clear message).</td>
+<td>Fixed</td>
+</tr>
+<tr>
+<td>BUG-035</td>
+<td>Announcement rules</td>
+<td>Low</td>
+<td>API tests</td>
+<td>A rule could be updated or deleted through the address of a different olympiad owned by the same organiser.</td>
+<td>A rule that doesn't belong to the olympiad in the address is reported as not found.</td>
+<td>Fixed</td>
+</tr>
+</tbody>
+</table>
+<h2 id="error-handling-and-validation">Error handling and validation</h2>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Area</th>
+<th>Priority</th>
+<th>Found by</th>
+<th>Bug</th>
+<th>Fix</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BUG-036</td>
+<td>Error handling</td>
+<td>Medium</td>
+<td>API tests</td>
+<td>A request with badly formed JSON caused a server error (500) instead of telling the client what was wrong.</td>
+<td>Returns 400 "Malformed JSON in request body".</td>
+<td>Fixed</td>
+</tr>
+<tr>
+<td>BUG-037</td>
+<td>Error handling</td>
+<td>Medium</td>
+<td>API tests</td>
+<td>A request from a website not allowed to use the API (CORS) caused a server error (500).</td>
+<td>Returns 403 "Origin is not allowed by CORS".</td>
+<td>Fixed</td>
+</tr>
+<tr>
+<td>BUG-038</td>
+<td>Error handling</td>
+<td>Medium</td>
+<td>API tests</td>
+<td>Deleting a record still used by other records (for example, a question that already has answers) caused a server error (500).</td>
+<td>Returns 409 "This record is still referenced by other records", and nothing is deleted.</td>
+<td>Fixed</td>
+</tr>
+<tr>
+<td>BUG-039</td>
+<td>Paper upload</td>
+<td>Medium</td>
+<td>API tests</td>
+<td>Uploading a file over 20 MB, or a file under an unexpected field name, caused a server error (500).</td>
+<td>Returns 413 for a file that is too large and 400 for an unexpected file field.</td>
+<td>Fixed</td>
+</tr>
+<tr>
+<td>BUG-040</td>
+<td>Validation</td>
+<td>Low</td>
+<td>API tests</td>
+<td>Several validation errors only said "Invalid value" (question points and options, exam status, learner details, notification rules, IDs in the address), or repeated the same message twice.</td>
+<td>Each field has a specific message, for example "max_points must be a number greater than 0".</td>
+<td>Fixed</td>
+</tr>
+</tbody>
+</table>
+<h2 id="deployment">Deployment</h2>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Area</th>
+<th>Priority</th>
+<th>Found by</th>
+<th>Bug</th>
+<th>Fix</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BUG-041</td>
+<td>Frontend deployment (Vercel)</td>
+<td>High</td>
+<td>Deployment</td>
+<td>The deployed frontend was built without its settings (API address and Supabase keys), so login and sign-up did not work. The variables were marked as sensitive, so the build step could not read them.</td>
+<td>The frontend variables were re-added as non-sensitive, since they are public by design, and the frontend was redeployed.</td>
+<td>Fixed</td>
+</tr>
+<tr>
+<td>BUG-042</td>
+<td>Backend deployment (Render)</td>
+<td>High</td>
+<td>Deployment</td>
+<td>The pipeline step that tells Render to deploy the new backend image failed, because the Render service ID stored as a pipeline secret was wrong.</td>
+<td>The <code>RENDER_SERVICE_ID</code> secret was corrected to the service's <code>srv-…</code> ID.</td>
+<td>Fixed</td>
+</tr>
+<tr>
+<td>BUG-043</td>
+<td>Backend deployment (Docker)</td>
+<td>High</td>
+<td>Deployment</td>
+<td>The backend Docker image failed to build on the Gitea Actions runner because the build had no network access to download packages.</td>
+<td>The image is built with <code>docker build --network=host</code>, giving the build step the runner's network.</td>
+<td>Fixed</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="reporting-a-new-bug">Reporting a new bug</h2>
+<p>New bugs are logged as issues in the project's Gitea repository, using the <a href="../testing/#4-user-feedback-process">user feedback process</a>. Include:</p>
+<ol>
+<li><strong>Role</strong> (organiser, educator or student) and the <strong>page or endpoint</strong></li>
+<li><strong>Steps</strong> to reproduce the bug</li>
+<li><strong>Expected</strong> result and <strong>actual</strong> result</li>
+<li>A <strong>screenshot</strong> or error message, if available</li>
+</ol>
+<p>Once a bug is fixed, with a test that reproduces it, it is added to this log with the next ID.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../testing/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Testing">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Testing
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../cicd-hosting/" class="md-footer__link md-footer__link--next" aria-label="Next: CI/CD and Hosting">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                CI/CD and Hosting
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.instant", "navigation.instant.progress", "navigation.tracking", "navigation.tabs", "navigation.sections", "navigation.top", "navigation.footer", "search.suggest", "search.highlight", "content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>

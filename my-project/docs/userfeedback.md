@@ -1,0 +1,1 @@
+[Look at the user feedbacks]( https://docs.google.com/spreadsheets/d/1KChVOrqBTuuHgRbzjseq8bKiin9wQO7pG_qsH63SQ3o/edit)

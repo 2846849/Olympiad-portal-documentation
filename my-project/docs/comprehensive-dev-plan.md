@@ -100,4 +100,5 @@ For deeper rationale behind each choice, see [Frontend](frontend.md), [Backend](
 
 | Version | Date           | Author               | Changes                  |
 | ------- | -------------- | -------------------- | ------------------------ |
-| 1.0     | September 2026 | Engedzani Mutambedzo | Initial development plan |
+| 1.0.0     | August 2026 | Engedzani Mutambedzo | Initial development plan |
+| 2.0.0     | September 2026| Engedzani Mutambedzo| Basic and some Intermediate features done|
