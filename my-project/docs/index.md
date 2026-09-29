@@ -3,7 +3,7 @@
 **COMS3011A Project 5 — Olympiad Portal**
 **Team:** Prompt Engineers
 
-[visit the Olympiad portal site](https://olympiad-frontend-xi.vercel.app)
+[visit the Olympiad portal site](https://olympiadportalfe.z1.web.core.windows.net/)
 
 This section of the documentation site describes the system's architecture and the
 technology choices behind it. Use the navigation on the left to jump to a specific
