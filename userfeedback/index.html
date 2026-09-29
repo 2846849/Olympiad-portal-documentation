@@ -9,10 +9,10 @@
       
       
       
-        <link rel="prev" href="../scheduling/">
+        <link rel="prev" href="../user-stories-by-role/">
       
       
-        <link rel="next" href="../testing/">
+        <link rel="next" href="../ai-declaration/">
       
       
         
@@ -23,7 +23,7 @@
     
     
       
-        <title>External Integration (EmailJS) - Olympiad-portal</title>
+        <title>User Feedback - Olympiad-portal</title>
       
     
     
@@ -73,11 +73,6 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
-        
-        <a href="#6-external-integration-emailjs" class="md-skip">
-          Skip to content
-        </a>
-      
     </div>
     <div data-md-component="announce">
       
@@ -108,7 +103,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              External Integration (EmailJS)
+              User Feedback
             
           </span>
         </div>
@@ -487,19 +482,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../external-integration/" class="md-nav__link">
         
   
   
@@ -515,7 +501,6 @@
   
 
       </a>
-      
     </li>
   
 
@@ -889,10 +874,17 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../userfeedback/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -908,6 +900,7 @@
   
 
       </a>
+      
     </li>
   
 
@@ -965,8 +958,6 @@
   
   
   
-    
-  
   
 </nav>
                   </div>
@@ -983,19 +974,9 @@
 
 
 
-<h1 id="6-external-integration-emailjs">6. External Integration — EmailJS</h1>
-<p>EmailJS is the external service integration required of the project, tied to the
-round reminder, follow-up, and results notification features.</p>
-<p>Because these notifications must fire automatically when a round opens or closes,
-independent of any user action in a browser, EmailJS is called from the <strong>Express
-scheduling module</strong> using its Node.js SDK and a private key, rather than from the
-React frontend using its browser SDK.</p>
-<p>!!! warning "Configuration notes"
-    - Non-browser API access must be enabled in the EmailJS account's security
-      settings for backend calls to succeed.
-    - The send method is limited to <strong>one request per second</strong>, so notifications
-      sent to multiple schools at once are queued and sent sequentially rather
-      than issued in a single loop.</p>
+  <h1>User Feedback</h1>
+
+<p><a href="https://docs.google.com/spreadsheets/d/1KChVOrqBTuuHgRbzjseq8bKiin9wQO7pG_qsH63SQ3o/edit">Look at the user feedbacks</a></p>
 
 
 
@@ -1031,7 +1012,7 @@ React frontend using its browser SDK.</p>
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../scheduling/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Scheduling">
+          <a href="../user-stories-by-role/" class="md-footer__link md-footer__link--prev" aria-label="Previous: User Stories By Role">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
@@ -1041,20 +1022,20 @@ React frontend using its browser SDK.</p>
                 Previous
               </span>
               <div class="md-ellipsis">
-                Scheduling
+                User Stories By Role
               </div>
             </div>
           </a>
         
         
           
-          <a href="../testing/" class="md-footer__link md-footer__link--next" aria-label="Next: Testing">
+          <a href="../ai-declaration/" class="md-footer__link md-footer__link--next" aria-label="Next: AI Declaration">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Testing
+                AI Declaration
               </div>
             </div>
             <div class="md-footer__button md-icon">
