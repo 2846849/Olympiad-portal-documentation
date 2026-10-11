@@ -1,8 +1,8 @@
 # System Design — Olympiad Portal
 
 > **Team:** Prompt Engineers
-> **Version:** 1.0
-> **Last updated:** September 2026
+> **Version:** v4.0.0
+> **Last updated:** October 2026
 
 ---
 
