@@ -3,348 +3,318 @@
 This document covers how the Olympiad Portal is tested:
 
 1. [Testing approach](#1-testing-approach)
-2. [Automated testing procedure](#2-automated-testing-procedure): every type of automated test, why it is used, what it covers and how to run it
-3. [Test policy](#3-test-policy): the rules the team follows for writing and running tests
-4. [User feedback process](#4-user-feedback-process): how feedback from users is collected and acted on
+2. [Automated testing procedure](#2-automated-testing-procedure) — every type of test, why it is used, what it covers
+3. [Running the tests](#3-running-the-tests)
+4. [How CI enforces the tests](#4-how-ci-enforces-the-tests)
+5. [Test policy](#5-test-policy)
+6. [User feedback process](#6-user-feedback-process)
 
-Bugs found during testing and user feedback are recorded in [bug-tracking.md](bug-tracking.md).
+Bugs found by testing and by users are recorded in [bug-tracking.md](bug-tracking.md).
 
 ---
 
 ## 1. Testing approach
 
-The portal has a React frontend and an Express + PostgreSQL backend used by three roles: organisers, educators and students. Tests are written at several levels. Each level answers a different question, from "does this function work?" to "can a real user finish their task in a real browser?".
+The portal has a React frontend and an Express + PostgreSQL backend, used by three roles: organisers, educators and students. Tests are written at four levels, each answering a different question.
 
-| Level | Question it answers | Speed | Status |
-|---|---|---|---|
-| Unit tests | Does each function, component and hook work on its own? | Very fast | Done |
-| Integration tests | Do the parts work together (services with a real database, full pages with the app's real logic)? | Fast | Done |
-| API tests | Does every endpoint return the right status, data and errors, and enforce who may call it? | Fast | Done |
-| End-to-end (E2E) tests | Can each role complete their real tasks in a real browser? | Slower | In progress |
-| Continuous integration (CI) | Do all of the above pass on every push, before code is merged or deployed? | Automatic | Planned |
+| Level       | Question it answers                                                                                | Tests     | Speed   |
+| ----------- | -------------------------------------------------------------------------------------------------- | --------- | ------- |
+| Unit        | Does each function, component and hook work on its own?                                            | 923       | Seconds |
+| Integration | Do the parts work together — services with a real database, whole pages with the app's real logic? | 234       | Seconds |
+| API         | Does every endpoint return the right response, and let in only the right people?                   | 482       | ~45s    |
+| End-to-end  | Can each role finish their real tasks in a real browser?                                           | 15        | ~40s    |
+| **Total**   |                                                                                                    | **1,654** |         |
 
-Most tests are unit, integration and API tests, because they are fast and point to the exact cause of a failure. A smaller number of E2E tests cover the most important user journeys from start to finish.
+Most tests sit at the lower levels, because they are fast and point straight at the cause of a failure. A small number of end-to-end tests cover the critical journeys from start to finish.
 
-### Current results
+| Suite                | Location                     | Tools                                |
+| -------------------- | ---------------------------- | ------------------------------------ |
+| Backend unit         | `backend/tests/unit`         | Jest                                 |
+| Backend integration  | `backend/tests/integration`  | Jest + PGlite                        |
+| Backend API          | `backend/tests/api`          | Jest + Supertest + PGlite            |
+| Frontend unit        | `frontend/tests/unit`        | Vitest + React Testing Library       |
+| Frontend integration | `frontend/tests/integration` | Vitest + React Testing Library + MSW |
+| End-to-end           | `frontend/e2e`               | Playwright                           |
 
-| Suite | Location | Tests |
-|---|---|---|
-| Backend unit | `backend/tests/unit` | 676 |
-| Backend integration | `backend/tests/integration` | 111 |
-| Backend API | `backend/tests/api` | 475 |
-| Frontend unit | `frontend/tests/unit` | 247 |
-| Frontend integration | `frontend/tests/integration` | 123 |
-| **Total** | | **1,632** |
+Coverage of the backend and frontend source, measured on 29 September 2026 (see [Running the tests](#3-running-the-tests) to measure it yourself):
 
-| Coverage | Statements | Branches | Functions | Lines |
-|---|---|---|---|---|
-| Backend unit | 99.4% | 97.5% | 99.6% | 99.5% |
-| Backend integration | 86.8% | 71.1% | 95.2% | 89.7% |
-| Backend API | 94.6% | 82.5% | 97.4% | 95.5% |
-| Frontend unit | 99.2% | 98.6% | 99.3% | 99.1% |
+| Suite                                            | Statements | Branches | Functions | Lines |
+| ------------------------------------------------ | ---------- | -------- | --------- | ----- |
+| Backend unit                                     | 88.8%      | 79.2%    | 87.5%     | 90.0% |
+| Backend API                                      | 80.9%      | 65.3%    | 77.5%     | 82.8% |
+| Backend integration                              | 67.3%      | 53.0%    | 64.9%     | 70.4% |
+| Frontend unit and integration (all source files) | 77.4%      | 68.9%    | 76.2%     | 78.4% |
+
+The least covered frontend files are the newest pages, which have no tests yet: the organiser's Remarks, Standings, Round replay and Edit olympiad pages, and the educator's Remarks page.
+
+No suite needs a database, a `.env` file or an internet connection. Everything runs after `npm install` (plus one browser download for the end-to-end tests).
 
 ---
 
 ## 2. Automated testing procedure
 
-### 2.1 Tools and why they were chosen
+### 2.1 Tools, and why they were chosen
 
-| Tool | Used for | Why |
-|---|---|---|
-| **Jest** | Backend unit, integration and API tests | The standard test runner for Node.js. It includes mocking, coverage reports and parallel runs, so no extra libraries are needed. |
-| **Vitest** | Frontend unit and integration tests | Built for Vite, which the frontend already uses, so tests share the app's build configuration. Its API is almost the same as Jest's, so one style is used across the project. |
-| **React Testing Library** + **user-event** | Frontend tests | Tests use the page the way a user does: finding buttons by their label, typing and clicking. They check what the user sees, not internal code, so they keep working when code is reorganised. |
-| **jsdom** | Frontend tests | Simulates a browser inside Node, so components render without opening a real browser. |
-| **MSW** (Mock Service Worker) | Frontend integration tests | Intercepts network requests and returns realistic backend responses. Pages run their real API client and logic, but no real server is needed. |
-| **PGlite** | Backend integration and API tests | The real PostgreSQL engine running inside the test process. Tests use a genuine Postgres database built from the project's migrations, with nothing to install (no Docker, no local database, no cloud database). |
-| **Supertest** | Backend API tests | Sends real HTTP requests to the Express app without starting a server on a port, and checks status codes, headers and response bodies. |
-| **Playwright** | E2E tests | Drives real browsers (Chromium, Firefox and WebKit) with one install. It runs headless in CI with no separate GUI runner, and records screenshots, videos and traces when a test fails. |
+| Tool                      | Used for                               | Why                                                                                                                                                        |
+| ------------------------- | -------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Jest**                  | Backend tests                          | The standard Node.js test runner: mocking, coverage and parallel runs built in.                                                                            |
+| **Vitest**                | Frontend tests                         | Built for Vite, which the frontend already uses, so tests share the app's build setup. Its API matches Jest's, so one style covers the project.            |
+| **React Testing Library** | Frontend tests                         | Tests use a page the way a person does — finding buttons by their label, typing, clicking — so they keep working when the code behind them is reorganised. |
+| **MSW**                   | Frontend integration tests             | Intercepts network calls and answers with realistic backend responses, so pages run their real logic without a server.                                     |
+| **PGlite**                | Backend integration, API and E2E tests | Real PostgreSQL running inside the test process: genuine constraints and data types, with nothing to install.                                              |
+| **Supertest**             | Backend API tests                      | Sends real HTTP requests to the Express app and checks status codes, headers and bodies.                                                                   |
+| **Playwright**            | End-to-end tests                       | Drives real browsers from one install, runs headless without a display, and saves screenshots and traces when something fails.                             |
+| **Postman**               | API & load performance testing         | Standardized collection for live API functional validation, cold-start probing, and concurrency benchmarking (see [postman-testing.md](postman-testing.md)). |
 
-### 2.2 Folder layout
+### 2.2 Unit tests
 
-```
-backend/
-  jest.config.js                 unit tests
-  jest.integration.config.js     integration tests
-  jest.api.config.js             API tests
-  tests/
-    unit/                        controllers, services, middleware, routes, jobs, utils
-      helpers/                   database mock, fake request/response, controller test cases
-    integration/                 services and database working together
-      setup/                     starts the test database and empties it before each test
-      helpers/                   test data factories, fake Supabase and email
-    api/                         HTTP tests for every endpoint
-      helpers/                   request helpers and the list of all endpoints
+**What:** one function, component or hook at a time, with everything around it replaced by a mock.
 
-frontend/
-  vitest.config.ts               "unit" and "integration" projects
-  tests/
-    unit/                        components, hooks, helpers
-    integration/                 full pages through the real app
-      support/                   app renderer, network mocks, API-shaped test data
+**Why:** they run in seconds, so they can be run on every change, and a failure points at one exact place. They also make it practical to cover every branch — each validation rule, each error path.
 
-e2e/                             Playwright E2E tests (in progress)
-```
+**Backend** — services (auth and invitations, olympiads, rounds, questions, papers, submissions, marking, results, lifecycle, schools, notification rules, educator and student views), controllers, middleware (authentication, roles, validation, error handling, rate limiting), the scheduled round-lifecycle job and helpers. The database client is replaced by a mock, so each test decides what the database returns and checks what the code asked for.
 
-### 2.3 Unit tests
+**Frontend** — UI components, the API client, the Supabase client, login/logout helpers, data-fetching hooks, and the building blocks of each page (question form and cards, marking card, answer-key editor, invitation inbox and invite form, round status labels, dashboard helpers, exam timer, exam storage).
 
-**What they are:** tests of a single function, component or hook, with everything it depends on replaced by a mock.
+### 2.3 Integration tests
 
-**Why they are used:** they run in seconds, so developers can run them after every change. A failing unit test points to one exact piece of code, which makes problems quick to find. They also make it practical to check every branch of the logic, such as each validation rule and each error case.
+**What:** several real parts working together.
 
-**Backend: what is tested**
-- **Services:** the business logic, meaning authentication and invitations, olympiads, rounds, questions, papers, submissions, marking, marking maths, results, the round lifecycle, schools, notification rules, and the educator and student views.
-- **Controllers:** each one calls the right service with values from the request and returns the right status code and response.
-- **Middleware:** authentication and roles, validation, error handling and rate limiting.
-- **Routes with their own logic:** exam sitting and exam status.
-- **Other:** the scheduled round-lifecycle job, the email sender, invitation code helpers and error classes.
+**Why:** unit tests mock everything around the code, so they can't catch problems in the joins — a database constraint, a transaction, a page reading a field the API doesn't send, a number arriving as text.
 
-**Backend: how**
-- The database client (Prisma) is replaced by a mock, so each test decides what the database returns and checks what the code asked for.
-- Supabase and email are mocked, so no external service is contacted.
+**Backend** — real services and Prisma against a real PostgreSQL database:
 
-**Frontend: what is tested**
-- UI components: buttons, form controls, display components and the page layout.
-- The API client, Supabase client, login and logout helpers, and data-fetching hooks.
-- Page building blocks:
-  - the question form and question cards
-  - the answer-marking card and the answer-key correction editor
-  - the school invitation form
-  - round status labels and dashboard helpers
-  - exam timer and exam answer storage
+1. At the start of a run, an in-memory PostgreSQL database is created and every migration in `prisma/migrations` is applied in order. This also proves the migrations build a working database from scratch.
+2. The app connects through its normal database code; only the connection address changes.
+3. Every setting is given a safe test value before the app loads, so a developer's real `.env` can never be used.
+4. Every table is emptied before each test, and the reset refuses to run against anything but the local test database.
+5. Test data is built with shared factories (organisers, schools, educators, rounds, papers, learners, olympiad invitations).
+6. Supabase and email are replaced by fakes.
 
-**Frontend: how** — each piece is rendered on its own, and its API calls and services are mocked.
+Covered: the database schema itself, open sign-up in all three roles and the invitation chain (organiser → educator → student), olympiads and rounds, exam building and approval, the online exam, offline submissions and marking, results, educator and student views, schools, notification rules and papers.
 
-### 2.4 Integration tests
+**Frontend** — whole pages inside the real app, with its real routes, API client and data fetching; only the network is faked. MSW answers with the backend's exact response format and records every request, so tests can check what was sent. Any request without a prepared answer fails the test.
 
-**What they are:** tests that check several real parts working together.
+Covered: login and sign-up, password reset, account deletion, organiser dashboard and management pages, announcements and archive, exam review and marking, the exam builder, educator pages, student pages, and the full exam-sitting page (timer, autosave, offline saving, submission).
 
-**Why they are used:** unit tests mock the pieces around the code, so they can't catch problems in how pieces fit together. Examples are a database constraint, a transaction, a page that reads a field the API doesn't send, or a value arriving as text instead of a number. Integration tests catch these while staying fast and not needing any external service.
+### 2.4 API tests
 
-#### Backend integration tests
+**What:** real HTTP requests through the whole backend — routing, security middleware, validation, business logic, database — checking the real response.
 
-Real services and the real Prisma client work with a real PostgreSQL database.
+**Why:** the frontend depends on the API behaving exactly as documented, and these rules protect exam papers, answer keys, marks and learner data.
 
-**Test database strategy**
-1. When the test run starts, an in-memory PostgreSQL database (PGlite) is created. Every migration in `prisma/migrations` is applied in order, which also confirms the migrations build a working database from scratch.
-2. The app connects to it through its normal database code; only the connection address changes.
-3. Every setting the app reads is set to a safe test value before the app loads, so a developer's real `.env` file (with production credentials) is never used.
-4. Every table is emptied before each test, so tests never depend on each other. The reset refuses to run against anything except the local test database.
-5. Test files run one at a time because they share the database.
-6. Test data is created with factories (organisers, olympiads, schools, educators, rounds, papers, questions, learners, students, invitations) so every test starts from a clear, realistic setup.
-7. Supabase Auth, Supabase Storage and email are replaced by fakes.
+**Complete coverage is enforced.** All 110 endpoints are listed in `backend/tests/api/helpers/endpoints.js` with the roles allowed to call each. From that list the tests automatically check:
 
-| Test file | What it covers |
-|---|---|
-| `database.test.js` | All tables are created by the migrations; defaults, decimal values, unique constraints, cascading deletes and delete restrictions |
-| `authAndInvitations.test.js` | The full invitation chain (organiser → school → educator → student), rollback when registration fails, authentication and school membership checks |
-| `olympiadsAndRounds.test.js` | Creating and managing olympiads and rounds, round state changes, deleting rounds |
-| `questionsAndExamStatus.test.js` | Building an exam and the draft → ready → live approval flow |
-| `examSitting.test.js` | A student sitting an exam online: load, start, save answers, resume, submit and automatic marking |
-| `submissionsMarkingResults.test.js` | Offline submissions, automatic marking, the marking queue, manual marking, generating results and the automatic round lifecycle |
-| `educatorAndStudentViews.test.js` | Learner registration with round progression, results, past papers, and the student dashboard and results |
-| `schoolsRulesAndPapers.test.js` | School lists, notification rules, paper upload, download and archive |
+1. the list matches the route files — a new endpoint that isn't listed fails the run;
+2. every protected endpoint returns **401** without a token;
+3. every protected endpoint returns **403** for each role not allowed;
+4. public endpoints work without a token.
 
-#### Frontend integration tests
+Each area then covers the normal case, ownership (users from another olympiad or school are refused), validation (**422** with a clear message) and edge cases (a round that isn't open, a duplicate submission, a file over the size limit).
 
-Whole pages run inside the real app, with its real routes, API client, Supabase client and data fetching. Only the network is faked, using MSW.
+**Public developer API.** `backend/tests/api/public.test.js` checks what other websites rely on (any origin may call `/public/v1` from the browser while the rest of the API still refuses it, responses may be cached for a minute, and each client's rate limit is reported in the standard headers), every public endpoint's data against a known set of olympiads, schools and results, validation and 404s, paper downloads, and that no response anywhere in `/public/v1` contains a learner's name, email, id or own result.
 
-**How**
-- The real application is rendered at a chosen URL, and the test clicks, types and checks results as a user would.
-- MSW answers every request with data in exactly the backend's format, and records each request so tests can check what was sent. Any request without a prepared response fails the test.
-- Test data matches real API responses, including decimal values sent as text.
+**Peak load (A1).** `backend/tests/api/peakLoad.test.js` piles many things onto the same instant and then checks the outcome exactly, not just that nothing failed:
 
-| Test file | What it covers |
-|---|---|
-| `auth.test.tsx` | Log in for each role, organiser sign-up, sign-up with an invitation code or emailed link, error messages, log out |
-| `organiserManagement.test.tsx` | Organiser dashboard, olympiads, schools, creating a round and uploading its paper |
-| `notificationsAndArchive.test.tsx` | Announcement rules (create, enable, disable, delete) and the paper archive |
-| `examReviewAndMarking.test.tsx` | Reviewing an exam against the memo, approving or sending it back, correcting answers, the marking queue and generating results |
-| `examBuilder.test.tsx` | Adding each question type, editing, deleting, points totals and submitting the exam for review |
-| `educatorPages.test.tsx` | Educator dashboard, round page (paper download, submitting results for each learner), entrants and invitations, results |
-| `studentPages.test.tsx` | Student dashboard, round page (paper download, sitting online, results), results page |
-| `examSitting.test.tsx` | Timer based on the server clock, autosave, flags, resuming, saving while offline, submitting when the connection returns, automatic submit when time runs out |
+| Scenario                                                                                                                       | What must hold                                                                                                                                                                                                                                    |
+| ------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 40 rounds due to open or close at the same moment, with three lifecycle ticks running at once                                  | Every round opens or closes exactly once, with one audit event each                                                                                                                                                                               |
+| 45 learners around a round's close: some well before, some in its last 150 ms while two ticks close the round, some just after | Every deadline ruling matches the moment its request arrived; answers changed before the close count and those after don't; every sitting is marked once, with marks that match the answers stored, and every learner has one result that adds up |
+| Ten learners double-clicking Submit                                                                                            | Each submission counts once; the second click is told it's already submitted                                                                                                                                                                      |
+| A sitting saved after the close-time marking had run                                                                           | The next tick marks it, so none is left unmarked                                                                                                                                                                                                  |
+| Three email passes running at once                                                                                             | Each educator gets the notice once                                                                                                                                                                                                                |
 
-### 2.5 API tests
+Run against the code from before these fixes, three of the five scenarios fail. What was fixed:
 
-**What they are:** real HTTP requests sent to the backend, going through every layer (routing, security middleware, validation, business logic and the database) and checking the actual response.
+- A sitting is **claimed before it is marked**, in the same transaction, by the submit, the close-time marking and the next tick alike, so exactly one of them marks it, using the answers saved before the claim.
+- An autosave **holds the sitting** while it writes and is refused after the deadline, so no answer changes after it has been marked.
+- A round records **when it actually closed** (`closed_at`), so a submission that arrived in time counts even if the round closed while the request was being handled.
+- Every tick **picks up sittings left unmarked** in rounds that have closed.
+- Each email is **claimed before it is sent** and released if it fails, and a lifecycle tick that comes due while the previous one is still running is skipped.
+- Transactions **wait up to 15 s for a database connection** (Prisma's default is 2 s), so a burst at the close queues instead of failing.
 
-**Why they are used:** the frontend relies on the API behaving exactly as documented. API tests prove every endpoint returns the right status code, data and error message, and, most importantly, that each endpoint only lets the right people in. These are the rules that protect exam papers, answer keys, marks and learner data.
+The test database is PGlite, a single Postgres session behind a socket server, so the integration and API suites use one pooled connection (`DATABASE_POOL_MAX=1`, as the end-to-end tests already did). Requests made at the same moment then queue for it, as they do for a busy pool, instead of interleaving inside one session. This proves the rules are applied correctly under concurrency; it is not a measure of throughput, which would need a separate full Postgres.
 
-**How**
-- Supertest sends requests to the Express app.
-- The database is a real PostgreSQL database, set up exactly as in the integration tests.
-- Supabase Auth is faked so a test can sign in as any user, while user accounts and roles are still loaded from the real database.
-- Every response is checked against the standard format: `{ success, data }` or `{ success, error }`.
+### 2.5 End-to-end tests
 
-**Every endpoint is covered.** All 66 endpoints are listed in `backend/tests/api/helpers/endpoints.js` with the roles allowed to call each one. Using that list, the tests automatically check that:
-1. The list matches the route files exactly. If a new endpoint is added without being listed, the test run fails.
-2. Every protected endpoint returns **401** when no login token is sent.
-3. Every protected endpoint returns **403** for each role that is not allowed.
-4. Public endpoints can be reached without logging in.
+**What:** a real browser completing real tasks against the real frontend, the real backend and a real database.
 
-For each area, the tests then cover:
-- **The normal case:** correct request, correct response and data saved.
-- **Ownership:** users from another olympiad or school are refused.
-- **Validation:** invalid input returns **422** with a clear message.
-- **Business rules and edge cases:** for example, a round that isn't open yet, a duplicate submission or a file over the size limit.
+**Why:** the final check that the whole system works for its users — real login, uploads, navigation and browser behaviour. Kept small, because these are the slowest tests.
 
-| Test file | What it covers |
-|---|---|
-| `endpoints.test.js` | The endpoint list, and authentication and role checks for every endpoint |
-| `app.test.js` | Health check, unknown routes, security headers, CORS, rate limiting, malformed requests and invalid IDs, login token checks |
-| `auth.test.js` | Registration, invitation codes and links, the current user, account deletion, every invitation endpoint |
-| `olympiadsAndRounds.test.js` | Olympiads, rounds, schools, archive, notification rules, editing, state changes, deleting and paper upload |
-| `examContent.test.js` | Questions, the exam approval flow, and links to papers and memos |
-| `submissionsAndMarking.test.js` | Offline submissions, automatic marking, the marking queue, marking answers and generating results |
-| `educator.test.js` | All educator portal endpoints |
-| `student.test.js` | Student dashboard, round details, results, paper download and the full online exam over HTTP |
+**How it runs:** `frontend/e2e/servers.ts` starts everything for a run: a PostgreSQL database built from the migrations and seeded with known data, a local stand-in for Supabase (sign-in, password reset, file storage), the real backend, and the frontend built the way it is deployed. Tests then click through the UI — they even sign in by typing into the login form.
 
-### 2.6 End-to-end (E2E) tests — in progress
+**Journeys covered (15 tests):**
 
-**What they are:** tests that open the real portal in a real browser and complete tasks exactly as users would, with the real frontend, real backend and a real database working together.
+| Area          | Journey                                                                                                                                                                                                            |
+| ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Accounts      | Sign in as each role · wrong password refused · log out · organiser sign-up · student sign-up by picking a school · educator sign-up with a new school · **password reset from end to end** · **account deletion** |
+| Organiser     | Create a round and upload its question paper, then open it · invite an educator, whose school then shows as invited                                                                                                |
+| Exam workflow | The educator builds the exam and submits it for review → the organiser checks it and puts it live                                                                                                                  |
+| Competition   | A student sits the exam online and submits → the organiser closes the round and releases results → the student sees their score                                                                                    |
+| Educator      | Register a learner and invite a student · a student accepts and gets the olympiad                                                                                                                                  |
 
-**Why they are used:** they are the final check that the whole system works for its users. They catch problems that only appear when everything runs together: real login, file uploads, browser behaviour, page navigation and layout. Only the most important journeys are covered, because E2E tests are slower than the other levels.
+**Deliberately left to the faster suites:** every validation message, permission checks for all 110 endpoints, offline exam behaviour, and page-by-page detail.
 
-**Why Playwright**
-- **One install covers three browsers:** Chromium, Firefox and WebKit (Safari's engine).
-- **Runs in CI without a separate GUI runner:** it works headless, which suits the project's Gitea Actions pipeline.
-- **Built-in failure evidence:** screenshots, videos and step-by-step traces.
-- **Waits automatically** for pages and elements, which keeps tests reliable.
+---
 
-**Test environment**
-- Playwright starts the frontend and backend itself before the tests run.
-- The backend uses a dedicated test database, filled with known starting data (seeded) before the run, and a separate Supabase test project. Production data and accounts are never used.
-- Each test signs in with its own test account for its role.
+## 3. Running the tests
 
-**Planned user journeys**
+### Backend
 
-| Journey | Role(s) |
-|---|---|
-| Log in and reach the correct dashboard; log out | All roles |
-| Create an olympiad and a round, upload the question paper and memo | Organiser |
-| Invite a school, then register as its coordinator from the invitation | Organiser, educator |
-| Register learners and invite students | Educator |
-| Build the exam from the question paper and submit it for review | Educator |
-| Review the exam against the memo and approve it | Organiser |
-| Sit the exam online: answer, flag, resume after a refresh, submit | Student |
-| Submit offline results for learners | Educator |
-| Mark essay answers and release results | Organiser |
-| View results and download the paper | Student, educator |
-| Pages remain usable at mobile width | All roles |
-
-**How to run (once added)**
-```bash
-cd e2e
-npm install
-npx playwright install      # downloads the browsers
-npx playwright test         # runs all E2E tests headless
-npx playwright show-report  # opens the HTML report with screenshots and traces
-```
-
-### 2.7 How to run the tests
-
-No database, `.env` file or internet connection is needed for the unit, integration or API tests.
-
-**Backend**
 ```bash
 cd backend
 npm install
 npm run test:unit                   # unit tests
 npm run test:integration            # integration tests
 npm run test:api                    # API tests
-npm test                            # all backend tests
-npm run test:coverage               # unit test coverage report
-npm run test:integration:coverage   # integration test coverage report
-npm run test:api:coverage           # API test coverage report
+npm test                            # all three in order
+npm run test:coverage               # unit coverage report
+npm run test:integration:coverage   # integration coverage report
+npm run test:api:coverage           # API coverage report
 ```
 
-**Frontend**
+### Frontend
+
 ```bash
 cd frontend
 npm install
 npm run test:unit          # unit tests
 npm run test:integration   # integration tests
-npm test                   # all frontend tests
-npm run test:watch         # re-runs unit tests on every save
-npm run test:coverage      # unit test coverage report
-npm run typecheck:tests    # type-checks the test code
+npm test                   # both
+npm run test:watch         # unit tests, re-running on save
+npm run test:coverage      # unit coverage report
+npm run test:coverage:all  # unit and integration coverage of every source file
+npm run typecheck:tests    # type-check the test code
+npm run lint               # lint
 ```
 
-### 2.8 Continuous integration — planned
+### End-to-end
 
-The project already uses Gitea Actions to build and deploy the backend (Render) and the frontend (Vercel). The test suites are being added to that pipeline:
-
-1. On every push and pull request, the pipeline installs dependencies, then runs linting, a frontend build, and the backend and frontend test suites.
-2. E2E tests run on pull requests into `main`.
-3. Deployment to Render and Vercel happens only when every test passes.
-4. Coverage reports and Playwright reports are saved with each pipeline run.
-
----
-
-## 3. Test policy
-
-These rules apply to everyone working on the project.
-
-### 3.1 When tests must be written
-1. **New features** include tests at the levels that fit:
-   - unit tests for new logic
-   - an integration test for new database behaviour or a new page
-   - API tests for every new or changed endpoint
-2. **New endpoints** must be added to `backend/tests/api/helpers/endpoints.js` with the roles allowed to call them; the test run fails until this is done.
-3. **Every bug fix includes a test** that fails before the fix and passes after it, so the bug cannot return. The bug and its fix are recorded in [bug-tracking.md](bug-tracking.md).
-4. **Changes to permissions or security** (who may see or change data) always include API tests for both the allowed and the refused users.
-
-### 3.2 Before code is merged
-1. All test suites pass, along with linting and the frontend build.
-2. No test is skipped, deleted or weakened just to make a change pass. If a test's expected behaviour changes, the reason is explained in the pull request.
-3. Coverage must not drop noticeably. Target: at least 90% of statements for unit tests.
-4. Pull requests are reviewed by another team member, including the tests.
-
-### 3.3 How tests are written
-1. **Tests are independent.** Each test creates its own data and never depends on another test having run first. The test database is emptied before every test.
-2. **No real external services in automated tests.** Supabase and email are faked in unit, integration and API tests, and tests never use production data or credentials. E2E tests use separate test accounts and a test database only.
-3. **Test behaviour, not internal code.** Frontend tests find elements by role, label or visible text, as a user would. Backend tests check responses and saved data.
-4. **Realistic data.** Mocked API responses use exactly the backend's format, and test records are built with the shared factories.
-5. **Clear names.** Test names describe the expected behaviour, for example "responds 403 to another organiser".
-6. **Test code is held to the same standard as app code.** It is readable, reviewed and type-checked on the frontend.
-
-### 3.4 Handling test failures
-1. A failing test on `main` is fixed before any other work is merged.
-2. A test that fails only sometimes (a "flaky" test) is investigated and fixed rather than re-run until it passes.
-3. Failures found during testing are logged in [bug-tracking.md](bug-tracking.md).
+```bash
+cd frontend
+npx playwright install chromium   # one-off browser download
+npm run test:e2e                  # headless; starts its own database, backend and frontend
+npm run test:e2e:report           # open the report after a failure
+```
 
 ---
 
-## 4. User feedback process
+## 4. How CI enforces the tests
 
-Feedback from real users (organisers, educators and students) is collected in a formal way, so it is recorded, prioritised and followed through to a fix.
+Everything runs through one Gitea Actions pipeline: [`.gitea/workflows/ci.yml`](../.gitea/workflows/ci.yml). Deployment sits in the same file as the tests, because a job can only wait for jobs in the same workflow — that is what makes the deploys run after the checks.
 
-### 4.1 Collecting feedback
-1. **User testing sessions.** Before each release, representative users from each role are given set tasks. Examples: "create a round and upload its paper", "register three learners", "sit the exam and submit". Observers note where users struggle, make mistakes or ask for help.
-2. **Feedback form.** After each session, participants complete a short form covering:
-   - how easy each task was (1–5)
-   - what was confusing
-   - what went wrong
-   - what they would change
-3. **Ongoing reports.** Users can report problems or suggestions to the team at any time. Each report includes the role, the page, what they did, what they expected and what happened, with a screenshot where possible.
+| Job                     | Runner | Pull request | Push to `main`              | What it does                                                         |
+| ----------------------- | ------ | ------------ | --------------------------- | -------------------------------------------------------------------- |
+| Backend checks & tests  | ours   | Yes          | Yes                         | Prisma schema check, unit, integration and API tests                 |
+| Frontend checks & tests | ours   | Yes          | Yes                         | Lint, test type-check, unit and integration tests, production build  |
+| Work out what changed   | ours   | No           | Yes                         | Decides whether the backend, the frontend or both need deploying     |
+| Deploy backend          | ours   | No           | Yes, if `backend/` changed  | Builds, migrates the database, then zip-deploys to Azure App Service |
+| Deploy frontend         | ours   | No           | Yes, if `frontend/` changed | Builds the site and uploads it to the Azure Storage `$web` container |
 
-### 4.2 Recording and triage
-1. Every piece of feedback is logged as an issue in the project's Gitea repository, labelled `bug`, `usability` or `feature request`.
-2. Each issue is given a priority:
+### Where the jobs run
 
-| Priority | Meaning | Example |
-|---|---|---|
-| Critical | Data is lost or exposed, or users cannot complete a core task | Exam answers not saved; a user can see or change data they shouldn't |
-| High | A core task works but gives wrong or confusing results | Wrong totals; an action appears to fail when it succeeded |
-| Medium | Inconvenient but has a workaround | A field is awkward to edit |
-| Low | Cosmetic or minor | Wording, spacing, pluralisation |
+Every job runs on our own runner, `prompt-engineers-runner-1`, an Ubuntu VM in
+Azure registered against this repository. It advertises a single label,
+`prompt-engineers-azure`, which the shared runners do not, so a job asking for
+that label can only land on ours — and, because it advertises nothing else, it
+is never pulled into another team's `ubuntu-latest` queue.
 
-3. Issues are reviewed at the team's weekly meeting, assigned to a team member and scheduled. Critical issues are handled immediately.
+**The end-to-end suite is not part of CI; run it locally** (`npm run test:e2e`
+in `frontend/`) before merging changes to a user journey. Playwright, Chromium,
+a real backend and a PGlite database together need more memory than the VM
+has: on the 1 GiB VM the suite took 12–18 minutes and still failed tests on
+timeouts, while swapping heavily. It then ran on the shared runners, but they
+queued it behind other teams for so long that it rarely reported, so it was
+taken out of the pipeline on 28 September 2026. Bigger machines were considered
+and set aside: a 4 GB Azure VM costs about four times the current one, and
+Oracle's free Arm machines had no capacity in our region.
 
-### 4.3 Acting on feedback
-1. The reported problem is reproduced. Where possible, an automated test is written that shows the problem.
-2. The fix is made, and the new test and all existing tests must pass (see the [test policy](#3-test-policy)).
-3. The fix is recorded in [bug-tracking.md](bug-tracking.md) and the issue is closed with a link to the change.
-4. Where the feedback came from a user, the fix is confirmed with that user or in the next user testing session.
-5. Recurring themes (for example, several users confused by the same page) are raised at the weekly meeting and turned into design improvements.
+Our runner takes one job at a time (`capacity: 1`), so jobs that once ran
+side by side now queue. That is the cost of guaranteeing where they run.
+
+**Supported Node versions: 22, 24 and 26.** Every suite (unit, integration,
+API and end-to-end) passes on each. Both `package.json` files declare
+`"node": "^22 || ^24 || ^26"`, so npm prints an `EBADENGINE` warning on any
+other version, such as the short-lived odd releases. CI and App Service use
+Node 22.
+
+Node 24 once broke one frontend integration test, and the cause is worth
+knowing. From Node 24, `fetch`'s multipart parser builds each uploaded file
+with whatever `File` is global, then asserts it is Node's own `File`. Under
+jsdom the global is jsdom's `File`, so the assertion failed inside the mock
+server and the paper upload never resolved. `readBody` in
+`tests/integration/support/network.ts` now parses uploads with Node's `File`
+briefly put back in place. Browsers and the backend are unaffected; it only
+ever happened in the test environment.
+
+Rules the pipeline applies:
+
+- **Deploys wait for the checks but don't depend on them.** Both deploy jobs start once the backend and frontend checks have finished, pass or fail. A red check on `main` means the deployed code has a problem that needs fixing promptly; it doesn't hold the deploy back. Pull requests are where failures should be caught, so a pull request with red checks shouldn't be merged.
+- **Only what changed is deployed.** A frontend-only change doesn't rebuild and redeploy the backend.
+- **A newer push replaces a run in progress**, except on `main`, where a deploy is never cancelled half way. A cancelled run deploys nothing.
+- The pipeline can also be started by hand (`workflow_dispatch`), which runs everything and deploys both sides.
+
+---
+
+## 5. Test policy
+
+### When tests must be written
+
+1. **New features** get tests at the levels that fit: unit tests for new logic, an integration test for new database behaviour or a new page, API tests for new or changed endpoints.
+2. **New endpoints** must be added to `backend/tests/api/helpers/endpoints.js` with their allowed roles; the suite fails until they are.
+3. **Every bug fix includes a test** that fails before the fix and passes after it, and is recorded in [bug-tracking.md](bug-tracking.md).
+4. **Changes to permissions** always include API tests for both the allowed and the refused users.
+5. **New critical user journeys** get an end-to-end test; smaller details stay with the faster suites.
+
+### Before code is merged
+
+1. All suites pass, along with lint, the test type-check and the build — CI runs these on every pull request.
+2. No test is skipped, deleted or weakened to make a change pass. If expected behaviour changes, the reason goes in the pull request.
+3. Coverage must not drop noticeably. Target: at least 90% of statements at unit level.
+4. Another team member reviews the change, including its tests.
+
+### How tests are written
+
+1. **Independent:** each test creates its own data and never relies on another test. The test database is emptied before each one.
+2. **No real external services:** Supabase and email are faked; no production data or credentials are ever used.
+3. **Behaviour, not internals:** frontend tests find elements by role, label or visible text; backend tests check responses and stored data.
+4. **Realistic data:** mocked responses match the backend's real shapes, and records are built with the shared factories.
+5. **Clear names** that state the expected behaviour, e.g. "responds 403 to another organiser".
+6. **Test code is reviewed and type-checked** like application code.
+
+### When tests fail
+
+1. A failure on `main` is fixed before anything else is merged.
+2. A test that fails intermittently is investigated, not re-run until it passes.
+3. Anything found during testing is logged in [bug-tracking.md](bug-tracking.md).
+
+---
+
+## 6. User feedback process
+
+### Collecting feedback
+
+1. **User testing sessions.** Before a release, people from each role work through set tasks ("create a round and upload its paper", "register three learners", "sit the exam and submit"). Observers note where they hesitate, go wrong or ask for help.
+2. **Feedback form.** Afterwards each participant rates how easy each task was (1–5) and says what was confusing, what went wrong and what they would change.
+3. **Ongoing reports.** Anyone can report a problem at any time, giving their role, the page, what they did, what they expected and what happened, with a screenshot where possible.
+
+### Recording and triage
+
+Every piece of feedback becomes an issue in the project's Gitea repository, labelled `bug`, `usability` or `feature request`, and given a priority:
+
+| Priority | Meaning                                                | Example                                                  |
+| -------- | ------------------------------------------------------ | -------------------------------------------------------- |
+| Critical | Data lost or exposed, or a core task impossible        | Exam answers not saved; someone sees data they shouldn't |
+| High     | A core task works but gives wrong or confusing results | Wrong totals; an action that looks failed but succeeded  |
+| Medium   | Inconvenient, with a workaround                        | An awkward field                                         |
+| Low      | Cosmetic                                               | Wording, spacing, pluralisation                          |
+
+Issues are reviewed at the weekly team meeting, assigned and scheduled; critical ones are handled immediately.
+
+### Acting on feedback
+
+1. Reproduce the problem, and where possible write a test that shows it.
+2. Fix it, with that test and all existing tests passing (see the [test policy](#5-test-policy)).
+3. Record it in [bug-tracking.md](bug-tracking.md) and close the issue with a link to the change.
+4. Confirm the fix with the person who reported it, or in the next user testing session.
+5. Raise recurring themes at the weekly meeting and turn them into design improvements.

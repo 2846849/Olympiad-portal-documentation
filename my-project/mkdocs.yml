@@ -39,14 +39,19 @@ nav:
       - CI/CD and Hosting: cicd-hosting.md
       - Version Control: version-control.md
       - Project Methodology: methodology.md
+      - Project Management and Tracking: project-management and tracking.md
+      - Project Meetings: meetings.md
       - UI Design: ui-design.md
       - System Design : system-design.md
       - System Design Diagram: system-design.jpeg
+      - Two Way Signup System: Olympiad_Portal_Two_Way_Signup_LaTeX.pdf
       - RoadMap : roadmap.md 
       - Comprehensive Dev Plan: comprehensive-dev-plan.md
       - UML Diagrams: uml-diagrams.pdf
       - APIs : api.md
+      - Postman API Testing: postman-api-testing.md
       - Third Party Code: third-party-code.md
+      - Code Quality: Prettier Documentation.pdf
       - User Stories By Role: user-stories-by-role.md
       - User Feedback : userfeedback.md
       - AI Declaration: ai-declaration.md
