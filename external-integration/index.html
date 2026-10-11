@@ -668,6 +668,62 @@
   
   
     <li class="md-nav__item">
+      <a href="../project-management%20and%20tracking/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Project Management and Tracking
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../meetings/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Project Meetings
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../ui-design/" class="md-nav__link">
         
   
@@ -732,6 +788,34 @@
     
   
     System Design Diagram
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Olympiad_Portal_Two_Way_Signup_LaTeX.pdf" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Two Way Signup System
   
 
     
@@ -864,6 +948,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../postman-api-testing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Postman API Testing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../third-party-code/" class="md-nav__link">
         
   
@@ -872,6 +984,34 @@
     
   
     Third Party Code
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Prettier%20Documentation.pdf" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Code Quality
   
 
     
@@ -1024,6 +1164,24 @@ React frontend using its browser SDK.</p>
     - The send method is limited to <strong>one request per second</strong>, so notifications
       sent to multiple schools at once are queued and sent sequentially rather
       than issued in a single loop.</p>
+<h1 id="nagerdate-api-integration">Nager.Date API Integration</h1>
+<h2 id="purpose">Purpose</h2>
+<p>Olympiad Portal integrates the <strong>Nager.Date API</strong> to identify South African public holidays when organisers schedule Olympiad rounds.</p>
+<p>The integration helps organisers avoid unintentionally scheduling rounds on public holidays. If a selected date falls on a public holiday, the system displays a warning. Organisers can then change the date or proceed with the original schedule.</p>
+<h2 id="where-to-find-it-in-the-application">Where to Find It in the Application</h2>
+<ol>
+<li>Log in to Olympiad Portal as an <strong>Organiser</strong>.</li>
+<li>Navigate to the <strong>Organiser Dashboard</strong>.</li>
+<li>Select <strong>Create Round</strong>.</li>
+<li>Choose an Olympiad and enter the round's opening and closing dates.</li>
+<li>If either date falls on a South African public holiday, the system displays a warning identifying the holiday.</li>
+<li>The organiser can select <strong>Change Dates</strong> or <strong>Create Anyway</strong>.</li>
+</ol>
+<h2 id="example">Example</h2>
+<p>To demonstrate the integration, select <strong>16 December 2026 (Day of Reconciliation)</strong> as a round opening or closing date.</p>
+<p>The system should display a <strong>"Public holiday clashes detected"</strong> warning, allowing the organiser to reconsider the schedule.</p>
+<p><strong>External API:</strong> https://date.nager.at</p>
+<p><strong>Integration Type:</strong> Third-party REST API</p>
 
 
 
